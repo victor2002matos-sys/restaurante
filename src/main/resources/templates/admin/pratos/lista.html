@@ -6,7 +6,7 @@
 <main class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0">Gerenciar cardápio</h1>
-        <a th:href="@{/admin/pratos/novo}" class="btn btn-marca"><i class="bi bi-plus-lg"></i> Novo prato</a>
+        <a th:href="@{/admin/pratos/novo}" class="btn btn-dark">Novo prato</a>
     </div>
     <div th:replace="~{fragments/layout :: alertas}"></div>
     <table class="table table-hover bg-white align-middle">
@@ -20,21 +20,21 @@
             <td th:text="${p.categoria}"></td>
             <td class="small"><span th:each="i, st : ${p.ingredientes}" th:text="${i.nome} + (${st.last} ? '' : ', ')"></span></td>
             <td class="text-end" th:text="${'R$ ' + #numbers.formatDecimal(p.preco, 1, 'POINT', 2, 'COMMA')}"></td>
-            <td class="text-end" th:classappend="${precos[p.id].compareTo(p.preco) < 0} ? 'text-danger fw-semibold'"
+            <td class="text-end" th:classappend="${precos[p.id].compareTo(p.preco) < 0} ? ' fw-semibold'"
                 th:text="${'R$ ' + #numbers.formatDecimal(precos[p.id], 1, 'POINT', 2, 'COMMA')}"></td>
             <td>
-                <span th:if="${p.disponivel}" class="badge bg-success">Disponível</span>
-                <span th:unless="${p.disponivel}" class="badge bg-secondary">Indisponível</span>
+                <span th:if="${p.disponivel}" class="badge border text-dark">Disponível</span>
+                <span th:unless="${p.disponivel}" class="badge border text-dark">Indisponível</span>
             </td>
             <td class="text-end text-nowrap">
-                <a th:href="@{/admin/pratos/{id}/editar(id=${p.id})}" class="btn btn-sm btn-outline-secondary" title="Editar"><i class="bi bi-pencil"></i></a>
+                <a th:href="@{/admin/pratos/{id}/editar(id=${p.id})}" class="btn btn-sm btn-outline-secondary" title="Editar"> </a>
                 <form th:action="@{/admin/pratos/{id}/disponibilidade(id=${p.id})}" method="post" class="d-inline">
-                    <button class="btn btn-sm btn-outline-primary" th:title="${p.disponivel} ? 'Tirar do cardápio' : 'Voltar ao cardápio'">
-                        <i th:class="${p.disponivel} ? 'bi bi-eye-slash' : 'bi bi-eye'"></i></button>
+                    <button class="btn btn-sm btn-outline-secondary" th:title="${p.disponivel} ? 'Tirar do cardápio' : 'Voltar ao cardápio'">
+                        </button>
                 </form>
                 <form th:action="@{/admin/pratos/{id}/excluir(id=${p.id})}" method="post" class="d-inline"
                       onsubmit="return confirm('Excluir este prato?')">
-                    <button class="btn btn-sm btn-outline-danger" title="Excluir"><i class="bi bi-trash"></i></button>
+                    <button class="btn btn-sm btn-outline-secondary" title="Excluir"> </button>
                 </form>
             </td>
         </tr>

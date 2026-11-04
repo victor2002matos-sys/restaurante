@@ -38,7 +38,7 @@
                         <tr th:each="prato : ${pratos}">
                             <td>
                                 <span th:text="${prato.nome}"></span>
-                                <span th:if="${precos[prato.id].compareTo(prato.preco) < 0}" class="badge bg-danger ms-1">Promoção</span>
+                                <span th:if="${precos[prato.id].compareTo(prato.preco) < 0}" class="badge border text-dark ms-1">Promoção</span>
                             </td>
                             <td class="small text-muted" th:text="${prato.categoria}"></td>
                             <td class="text-end" th:text="${'R$ ' + #numbers.formatDecimal(precos[prato.id], 1, 'POINT', 2, 'COMMA')}"></td>
@@ -60,7 +60,7 @@
                     <div class="d-flex justify-content-between fw-bold fs-5 border-top pt-2">
                         <span>Total</span><span id="total">R$ 0,00</span>
                     </div>
-                    <button class="btn btn-marca mt-3">Confirmar pedido</button>
+                    <button class="btn btn-dark mt-3">Confirmar pedido</button>
                     <a th:href="@{/pedidos}" class="btn btn-outline-secondary mt-2">Cancelar</a>
                 </div>
             </div>

@@ -6,7 +6,7 @@
 <main class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0">Pedidos</h1>
-        <a th:href="@{/pedidos/novo}" class="btn btn-marca"><i class="bi bi-plus-lg"></i> Novo pedido</a>
+        <a th:href="@{/pedidos/novo}" class="btn btn-dark">Novo pedido</a>
     </div>
     <div th:replace="~{fragments/layout :: alertas}"></div>
     <table class="table table-hover bg-white align-middle">
@@ -23,7 +23,7 @@
             <td class="text-end text-nowrap">
                 <form th:if="${p.status.proximo() != null}" th:action="@{/pedidos/{id}/avancar(id=${p.id})}" method="post" class="d-inline">
                     <input type="hidden" name="voltar" value="lista">
-                    <button class="btn btn-sm btn-outline-primary" th:text="'→ ' + ${p.status.proximo().descricao}"></button>
+                    <button class="btn btn-sm btn-outline-secondary" th:text="'→ ' + ${p.status.proximo().descricao}"></button>
                 </form>
                 <a th:href="@{/pedidos/{id}(id=${p.id})}" class="btn btn-sm btn-outline-secondary">Detalhes</a>
             </td>

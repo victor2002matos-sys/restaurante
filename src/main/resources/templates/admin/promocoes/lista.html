@@ -6,7 +6,7 @@
 <main class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0">Promoções</h1>
-        <a th:href="@{/admin/promocoes/novo}" class="btn btn-marca"><i class="bi bi-plus-lg"></i> Nova promoção</a>
+        <a th:href="@{/admin/promocoes/novo}" class="btn btn-dark">Nova promoção</a>
     </div>
     <div th:replace="~{fragments/layout :: alertas}"></div>
     <table class="table table-hover bg-white align-middle">
@@ -18,14 +18,14 @@
             <td th:text="${pr.tipoDesconto.name() == 'PERCENTUAL'} ? ${#numbers.formatDecimal(pr.desconto, 1, 'POINT', 0, 'COMMA')} + '%' : 'R$ ' + ${#numbers.formatDecimal(pr.desconto, 1, 'POINT', 2, 'COMMA')}"></td>
             <td class="small"><span th:each="p, st : ${pr.pratos}" th:text="${p.nome} + (${st.last} ? '' : ', ')"></span></td>
             <td>
-                <span th:if="${pr.isVigente(hoje)}" class="badge bg-success">Vigente</span>
-                <span th:if="${pr.dataInicio.isAfter(hoje)}" class="badge bg-info text-dark">Agendada</span>
-                <span th:if="${pr.dataFim.isBefore(hoje)}" class="badge bg-secondary">Encerrada</span>
+                <span th:if="${pr.isVigente(hoje)}" class="badge border text-dark">Vigente</span>
+                <span th:if="${pr.dataInicio.isAfter(hoje)}" class="badge border text-dark">Agendada</span>
+                <span th:if="${pr.dataFim.isBefore(hoje)}" class="badge border text-dark">Encerrada</span>
             </td>
             <td class="text-end text-nowrap">
-                <a th:href="@{/admin/promocoes/{id}/editar(id=${pr.id})}" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></a>
+                <a th:href="@{/admin/promocoes/{id}/editar(id=${pr.id})}" class="btn btn-sm btn-outline-secondary"> </a>
                 <form th:action="@{/admin/promocoes/{id}/excluir(id=${pr.id})}" method="post" class="d-inline" onsubmit="return confirm('Excluir esta promoção?')">
-                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                    <button class="btn btn-sm btn-outline-secondary"> </button>
                 </form>
             </td>
         </tr>

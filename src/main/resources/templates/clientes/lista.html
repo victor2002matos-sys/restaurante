@@ -6,7 +6,7 @@
 <main class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="h3 mb-0">Clientes</h1>
-        <a th:href="@{/clientes/novo}" class="btn btn-marca"><i class="bi bi-person-plus"></i> Novo cliente</a>
+        <a th:href="@{/clientes/novo}" class="btn btn-dark">Novo cliente</a>
     </div>
     <div th:replace="~{fragments/layout :: alertas}"></div>
     <table class="table table-hover bg-white align-middle">
@@ -17,13 +17,13 @@
             <td th:text="${c.cpf}"></td>
             <td th:text="${c.telefone}"></td>
             <td class="small" th:text="${c.preferencias}"></td>
-            <td><span th:if="${c.alergias}" class="badge bg-warning text-dark" th:text="${c.alergias}"></span></td>
+            <td><span th:if="${c.alergias}" class="badge border text-dark" th:text="${c.alergias}"></span></td>
             <td th:text="${c.mesaPreferida}"></td>
             <td class="text-end text-nowrap">
-                <a th:href="@{/clientes/{cpf}/editar(cpf=${c.cpf})}" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></a>
+                <a th:href="@{/clientes/{cpf}/editar(cpf=${c.cpf})}" class="btn btn-sm btn-outline-secondary"> </a>
                 <form th:action="@{/clientes/{cpf}/excluir(cpf=${c.cpf})}" method="post" class="d-inline"
                       onsubmit="return confirm('Excluir este cliente?')">
-                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                    <button class="btn btn-sm btn-outline-secondary"> </button>
                 </form>
             </td>
         </tr>

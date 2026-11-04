@@ -4,10 +4,10 @@
 <body>
 <nav th:replace="~{fragments/layout :: nav}"></nav>
 <main class="container" style="max-width: 420px">
-    <div class="card shadow-sm">
+    <div class="card">
         <div class="card-body p-4">
             <h1 class="h4 mb-3">Área do funcionário</h1>
-            <div th:if="${param.error}" class="alert alert-danger">CPF ou senha inválidos.</div>
+            <div th:if="${param.error}" class="alert alert-light border">CPF ou senha inválidos.</div>
             <form th:action="@{/login}" method="post">
                 <div class="mb-3">
                     <label class="form-label" for="cpf">CPF</label>
@@ -17,7 +17,7 @@
                     <label class="form-label" for="senha">Senha</label>
                     <input class="form-control" id="senha" name="senha" type="password" required>
                 </div>
-                <button class="btn btn-marca w-100">Entrar</button>
+                <button class="btn btn-dark w-100">Entrar</button>
             </form>
             <details class="mt-3 small text-muted">
                 <summary>Usuários de demonstração (senha 123456)</summary>

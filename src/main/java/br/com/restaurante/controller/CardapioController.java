@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,9 +29,18 @@ public class CardapioController {
     public String cardapio(Model model) {
         List<Prato> pratos = pratoRepository.findByDisponivelTrueOrderByCategoriaAscNomeAsc();
         Map<String, List<Prato>> porCategoria = pratos.stream()
+                .sorted(Comparator.comparingInt((Prato p) -> ordemCategoria(p.getCategoria())))
                 .collect(Collectors.groupingBy(Prato::getCategoria, LinkedHashMap::new, Collectors.toList()));
         model.addAttribute("categorias", porCategoria);
         model.addAttribute("precos", precoService.precosAtuais(pratos));
         return "cardapio/index";
+    }
+
+    /** Ordem das seções no cardápio; categorias novas vão para o final. */
+    private static final List<String> ORDEM = List.of("Antipasti", "Massas", "Risotti", "Dolci", "Bevande");
+
+    private int ordemCategoria(String categoria) {
+        int i = ORDEM.indexOf(categoria);
+        return i < 0 ? ORDEM.size() : i;
     }
 }

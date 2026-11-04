@@ -19,7 +19,7 @@
             <div class="card coluna-cozinha">
                 <div class="card-header fw-semibold">
                     <span th:text="${coluna[0]}"></span>
-                    <span class="badge bg-secondary" th:text="${#lists.size(coluna[1])}"></span>
+                    <span class="badge border text-dark" th:text="${#lists.size(coluna[1])}"></span>
                 </div>
                 <div class="card-body">
                     <div th:if="${#lists.isEmpty(coluna[1])}" class="text-muted small">Nada por aqui.</div>
@@ -31,11 +31,10 @@
                         <ul class="mb-1 ps-3">
                             <li th:each="item : ${p.itens}" th:text="${item.quantidade} + 'x ' + ${item.prato.nome}"></li>
                         </ul>
-                        <div th:if="${p.cliente.alergias}" class="small text-danger mb-1">
-                            <i class="bi bi-exclamation-triangle"></i> Alergia: <span th:text="${p.cliente.alergias}"></span>
+                        <div th:if="${p.cliente.alergias}" class="small  mb-1">Alergia: <span th:text="${p.cliente.alergias}"></span>
                         </div>
                         <form th:if="${coluna[2] != null}" th:action="@{/cozinha/{id}/avancar(id=${p.id})}" method="post">
-                            <button class="btn btn-sm btn-marca w-100" th:text="${coluna[2]}"></button>
+                            <button class="btn btn-sm btn-dark w-100" th:text="${coluna[2]}"></button>
                         </form>
                     </div>
                 </div>

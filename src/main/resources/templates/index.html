@@ -4,30 +4,30 @@
 <body>
 <nav th:replace="~{fragments/layout :: nav}"></nav>
 <main class="container">
-    <div th:if="${param.saiu}" class="alert alert-info">Você saiu do sistema.</div>
-    <section class="hero p-5 mb-4">
-        <h1 class="display-5 fw-bold">Bem-vindo ao nosso restaurante</h1>
-        <p class="lead">Consulte o cardápio do dia, veja as promoções e conte para a gente como foi a sua experiência.</p>
-        <a th:href="@{/cardapio}" class="btn btn-light btn-lg me-2"><i class="bi bi-book"></i> Ver cardápio</a>
-        <a th:href="@{/avaliacao}" class="btn btn-outline-light btn-lg"><i class="bi bi-star"></i> Avaliar pedido</a>
+    <div th:if="${param.saiu}" class="alert alert-light border">Você saiu do sistema.</div>
+    <section class="border rounded p-5 mb-4">
+        <h1 class="h2">Trattoria Bella Pasta</h1>
+        <p class="lead">Cozinha italiana com massas frescas. Consulte o cardápio, veja as promoções e avalie seu pedido.</p>
+        <a th:href="@{/cardapio}" class="btn btn-outline-secondary btn-lg me-2">Ver cardápio</a>
+        <a th:href="@{/avaliacao}" class="btn btn-outline-secondary btn-lg">Avaliar pedido</a>
     </section>
     <div class="row g-4">
         <div class="col-md-4">
             <div class="card h-100"><div class="card-body">
-                <h5><i class="bi bi-book text-danger"></i> Cardápio</h5>
+                <h5>Cardápio</h5>
                 <p class="text-muted">Pratos disponíveis, ingredientes e preços já com as promoções do dia.</p>
             </div></div>
         </div>
         <div class="col-md-4">
             <div class="card h-100"><div class="card-body">
-                <h5><i class="bi bi-receipt text-danger"></i> Atendimento</h5>
+                <h5>Atendimento</h5>
                 <p class="text-muted">Garçons registram pedidos por mesa e a cozinha acompanha o preparo em tempo real.</p>
                 <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Entrar como funcionário</a>
             </div></div>
         </div>
         <div class="col-md-4">
             <div class="card h-100"><div class="card-body">
-                <h5><i class="bi bi-star text-danger"></i> Avaliação</h5>
+                <h5>Avaliação</h5>
                 <p class="text-muted">Depois da refeição, avalie seu pedido com uma nota de 1 a 10.</p>
             </div></div>
         </div>

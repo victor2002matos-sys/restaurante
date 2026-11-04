@@ -14,20 +14,18 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start">
                             <h3 class="h6 fw-bold mb-1" th:text="${prato.nome}">Prato</h3>
-                            <div class="text-end">
+                            <div class="text-end text-nowrap ms-2">
                                 <th:block th:with="atual=${precos[prato.id]}">
                                     <div th:if="${atual.compareTo(prato.preco) < 0}" class="preco-antigo"
                                          th:text="${'R$ ' + #numbers.formatDecimal(prato.preco, 1, 'POINT', 2, 'COMMA')}"></div>
-                                    <div class="fw-bold" th:classappend="${atual.compareTo(prato.preco) < 0} ? 'text-danger'"
+                                    <div class="fw-bold" 
                                          th:text="${'R$ ' + #numbers.formatDecimal(atual, 1, 'POINT', 2, 'COMMA')}"></div>
-                                    <span th:if="${atual.compareTo(prato.preco) < 0}" class="badge bg-danger">Promoção</span>
+                                    <span th:if="${atual.compareTo(prato.preco) < 0}" class="badge border text-dark">Promoção</span>
                                 </th:block>
                             </div>
                         </div>
                         <p class="text-muted small mb-2" th:text="${prato.descricao}"></p>
-                        <div class="small" th:unless="${#sets.isEmpty(prato.ingredientes)}">
-                            <i class="bi bi-basket"></i>
-                            <span th:each="i, st : ${prato.ingredientes}" th:text="${i.nome} + (${st.last} ? '' : ', ')"></span>
+                        <div class="small" th:unless="${#sets.isEmpty(prato.ingredientes)}"> <span th:each="i, st : ${prato.ingredientes}" th:text="${i.nome} + (${st.last} ? '' : ', ')"></span>
                         </div>
                     </div>
                 </div>

@@ -7,7 +7,7 @@
     <h1 class="h3 mb-3" th:text="${promocao.id == null} ? 'Nova promoção' : 'Editar promoção'"></h1>
     <form th:action="@{/admin/promocoes}" th:object="${promocao}" method="post" class="card card-body">
         <input type="hidden" th:field="*{id}">
-        <div th:if="${#fields.hasGlobalErrors()} or ${#fields.hasErrors('periodoValido')} or ${#fields.hasErrors('percentualValido')}" class="alert alert-danger">
+        <div th:if="${#fields.hasGlobalErrors()} or ${#fields.hasErrors('periodoValido')} or ${#fields.hasErrors('percentualValido')}" class="alert alert-light border">
             <div th:each="e : ${#fields.errors('periodoValido')}" th:text="${e}"></div>
             <div th:each="e : ${#fields.errors('percentualValido')}" th:text="${e}"></div>
         </div>
@@ -53,7 +53,7 @@
             </div>
         </div>
         <div class="mt-4 d-flex gap-2">
-            <button class="btn btn-marca">Salvar</button>
+            <button class="btn btn-dark">Salvar</button>
             <a th:href="@{/admin/promocoes}" class="btn btn-outline-secondary">Cancelar</a>
         </div>
     </form>
