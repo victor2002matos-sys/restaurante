@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Painel')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main class="container">
+    <h1 class="h3 mb-4">Painel</h1>
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3"><div class="card"><div class="card-body">
+            <div class="text-muted small">Mesas ocupadas</div>
+            <div class="fs-3 fw-bold"><span th:text="${mesasOcupadas}">0</span> / <span th:text="${totalMesas}">0</span></div>
+        </div></div></div>
+        <div class="col-6 col-md-3"><div class="card"><div class="card-body">
+            <div class="text-muted small">Pedidos em andamento</div>
+            <div class="fs-3 fw-bold" th:text="${#lists.size(pedidosAbertos)}">0</div>
+        </div></div></div>
+        <div class="col-6 col-md-3"><div class="card"><div class="card-body">
+            <div class="text-muted small">Pratos no cardápio</div>
+            <div class="fs-3 fw-bold" th:text="${totalPratos}">0</div>
+        </div></div></div>
+        <div class="col-6 col-md-3"><div class="card"><div class="card-body">
+            <div class="text-muted small">Nota média</div>
+            <div class="fs-3 fw-bold" th:text="${mediaAvaliacoes != null ? #numbers.formatDecimal(mediaAvaliacoes, 1, 1, 'COMMA') : '-'}">-</div>
+        </div></div></div>
+    </div>
+
+    <div class="d-flex gap-2 mb-4">
+        <a sec:authorize="hasAnyRole('GARCOM','GERENTE')" th:href="@{/pedidos/novo}" class="btn btn-marca"><i class="bi bi-plus-lg"></i> Novo pedido</a>
+        <a sec:authorize="hasAnyRole('GARCOM','GERENTE')" th:href="@{/clientes/novo}" class="btn btn-outline-secondary"><i class="bi bi-person-plus"></i> Novo cliente</a>
+        <a sec:authorize="hasAnyRole('COZINHEIRO','GERENTE')" th:href="@{/cozinha}" class="btn btn-outline-secondary"><i class="bi bi-fire"></i> Cozinha</a>
+    </div>
+
+    <h2 class="h5">Pedidos em andamento</h2>
+    <div th:if="${#lists.isEmpty(pedidosAbertos)}" class="text-muted">Nenhum pedido em andamento.</div>
+    <table th:unless="${#lists.isEmpty(pedidosAbertos)}" class="table table-hover bg-white">
+        <thead><tr><th>#</th><th>Mesa</th><th>Cliente</th><th>Horário</th><th>Status</th><th class="text-end">Total</th></tr></thead>
+        <tbody>
+        <tr th:each="p : ${pedidosAbertos}">
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.mesa.numero}"></td>
+            <td th:text="${p.cliente.nome}"></td>
+            <td th:text="${#temporals.format(p.dataHora, 'HH:mm')}"></td>
+            <td><span th:replace="~{fragments/layout :: status(${p.status})}"></span></td>
+            <td class="text-end" th:text="${'R$ ' + #numbers.formatDecimal(p.total, 1, 'POINT', 2, 'COMMA')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

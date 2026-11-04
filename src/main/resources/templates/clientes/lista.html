@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Clientes')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">Clientes</h1>
+        <a th:href="@{/clientes/novo}" class="btn btn-marca"><i class="bi bi-person-plus"></i> Novo cliente</a>
+    </div>
+    <div th:replace="~{fragments/layout :: alertas}"></div>
+    <table class="table table-hover bg-white align-middle">
+        <thead><tr><th>Nome</th><th>CPF</th><th>Telefone</th><th>Preferências</th><th>Alergias</th><th>Mesa preferida</th><th></th></tr></thead>
+        <tbody>
+        <tr th:each="c : ${clientes}">
+            <td th:text="${c.nome}"></td>
+            <td th:text="${c.cpf}"></td>
+            <td th:text="${c.telefone}"></td>
+            <td class="small" th:text="${c.preferencias}"></td>
+            <td><span th:if="${c.alergias}" class="badge bg-warning text-dark" th:text="${c.alergias}"></span></td>
+            <td th:text="${c.mesaPreferida}"></td>
+            <td class="text-end text-nowrap">
+                <a th:href="@{/clientes/{cpf}/editar(cpf=${c.cpf})}" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></a>
+                <form th:action="@{/clientes/{cpf}/excluir(cpf=${c.cpf})}" method="post" class="d-inline"
+                      onsubmit="return confirm('Excluir este cliente?')">
+                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

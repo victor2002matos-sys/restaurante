@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Avaliar atendimento')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main class="container" style="max-width: 520px">
+    <div class="card shadow-sm"><div class="card-body p-4">
+        <h1 class="h4">Avalie seu atendimento</h1>
+        <p class="text-muted">Informe o número do pedido que aparece na sua nota e o seu CPF.</p>
+        <div th:replace="~{fragments/layout :: alertas}"></div>
+        <form th:action="@{/avaliacao/validar}" method="post">
+            <div class="mb-3">
+                <label class="form-label" for="pedidoId">Número do pedido</label>
+                <input class="form-control" type="number" min="1" id="pedidoId" name="pedidoId" th:value="${pedidoId}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="cpf">CPF</label>
+                <input class="form-control" id="cpf" name="cpf" th:value="${cpf}" placeholder="Somente números" required>
+            </div>
+            <button class="btn btn-marca w-100">Continuar</button>
+        </form>
+    </div></div>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

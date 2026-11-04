@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Ingredientes')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main class="container" style="max-width: 720px">
+    <h1 class="h3 mb-3">Ingredientes</h1>
+    <div th:replace="~{fragments/layout :: alertas}"></div>
+    <form th:action="@{/admin/ingredientes}" method="post" class="d-flex gap-2 mb-3">
+        <input class="form-control" name="nome" placeholder="Nome do novo ingrediente" required maxlength="80">
+        <button class="btn btn-marca text-nowrap"><i class="bi bi-plus-lg"></i> Adicionar</button>
+    </form>
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center" th:each="i : ${ingredientes}">
+            <span th:text="${i.nome}"></span>
+            <form th:action="@{/admin/ingredientes/{id}/excluir(id=${i.id})}" method="post" onsubmit="return confirm('Excluir este ingrediente?')">
+                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+            </form>
+        </li>
+    </ul>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Avaliações')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">Avaliações dos clientes</h1>
+        <div th:if="${media}" class="fs-5">Média: <strong th:text="${#numbers.formatDecimal(media, 1, 1, 'COMMA')}"></strong>/10</div>
+    </div>
+    <div th:if="${#lists.isEmpty(avaliacoes)}" class="text-muted">Nenhuma avaliação recebida ainda.</div>
+    <table th:unless="${#lists.isEmpty(avaliacoes)}" class="table bg-white align-middle">
+        <thead><tr><th>Data</th><th>Pedido</th><th>Cliente</th><th>Nota</th><th>Comentário</th></tr></thead>
+        <tbody>
+        <tr th:each="a : ${avaliacoes}">
+            <td th:text="${#temporals.format(a.dataHora, 'dd/MM/yyyy HH:mm')}"></td>
+            <td><a th:href="@{/pedidos/{id}(id=${a.pedido.id})}" th:text="'#' + ${a.pedido.id}"></a></td>
+            <td th:text="${a.pedido.cliente.nome}"></td>
+            <td><span class="badge fs-6" th:classappend="${a.nota >= 8} ? 'bg-success' : (${a.nota >= 5} ? 'bg-warning text-dark' : 'bg-danger')" th:text="${a.nota}"></span></td>
+            <td th:text="${a.comentario}"></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

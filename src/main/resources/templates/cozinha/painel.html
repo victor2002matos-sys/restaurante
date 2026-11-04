@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Cozinha')}">
+</head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">Cozinha</h1>
+        <span class="small text-muted">A página atualiza sozinha a cada 30 segundos.</span>
+    </div>
+    <div th:replace="~{fragments/layout :: alertas}"></div>
+    <div class="row g-3">
+        <div class="col-md-4" th:each="coluna : ${ {
+                {'Aguardando preparo', aguardando, 'Iniciar preparo'},
+                {'Em preparo', emPreparo, 'Marcar como pronto'},
+                {'Prontos para servir', prontos, null}
+            } }">
+            <div class="card coluna-cozinha">
+                <div class="card-header fw-semibold">
+                    <span th:text="${coluna[0]}"></span>
+                    <span class="badge bg-secondary" th:text="${#lists.size(coluna[1])}"></span>
+                </div>
+                <div class="card-body">
+                    <div th:if="${#lists.isEmpty(coluna[1])}" class="text-muted small">Nada por aqui.</div>
+                    <div th:each="p : ${coluna[1]}" class="border rounded p-2 mb-2 bg-white">
+                        <div class="d-flex justify-content-between">
+                            <strong>#<span th:text="${p.id}"></span> · Mesa <span th:text="${p.mesa.numero}"></span></strong>
+                            <span class="small text-muted" th:text="${#temporals.format(p.dataHora, 'HH:mm')}"></span>
+                        </div>
+                        <ul class="mb-1 ps-3">
+                            <li th:each="item : ${p.itens}" th:text="${item.quantidade} + 'x ' + ${item.prato.nome}"></li>
+                        </ul>
+                        <div th:if="${p.cliente.alergias}" class="small text-danger mb-1">
+                            <i class="bi bi-exclamation-triangle"></i> Alergia: <span th:text="${p.cliente.alergias}"></span>
+                        </div>
+                        <form th:if="${coluna[2] != null}" th:action="@{/cozinha/{id}/avancar(id=${p.id})}" method="post">
+                            <button class="btn btn-sm btn-marca w-100" th:text="${coluna[2]}"></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+<script>setTimeout(() => location.reload(), 30000);</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+:root { --cor-marca: #b4441b; }
+body { background: #f7f5f2; }
+.navbar-brand { font-weight: 700; letter-spacing: .02em; }
+.bg-marca { background: var(--cor-marca) !important; }
+.btn-marca { background: var(--cor-marca); border-color: var(--cor-marca); color: #fff; }
+.btn-marca:hover { background: #8f3514; border-color: #8f3514; color: #fff; }
+.hero { background: linear-gradient(135deg, #b4441b 0%, #7a2a0d 100%); color: #fff; border-radius: 1rem; }
+.card-prato .preco-antigo { text-decoration: line-through; color: #888; font-size: .9em; }
+.status-AGUARDANDO_PREPARO { background: #fff3cd; color: #7a5b00; }
+.status-EM_PREPARO { background: #cfe2ff; color: #0a3d8f; }
+.status-PRONTO { background: #d1e7dd; color: #0f5132; }
+.status-ENTREGUE { background: #e2d9f3; color: #432874; }
+.status-FINALIZADO { background: #e9ecef; color: #343a40; }
+.status-CANCELADO { background: #f8d7da; color: #842029; }
+.badge-status { padding: .35em .65em; border-radius: .5rem; font-weight: 600; font-size: .8em; }
+.coluna-cozinha { min-height: 300px; }
+.mesa { width: 90px; height: 90px; border-radius: .75rem; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; font-weight: 600; }
+.mesa.livre { background: #d1e7dd; color: #0f5132; }
+.mesa.ocupada { background: #f8d7da; color: #842029; }
+.nota-escolha input { display: none; }
+.nota-escolha label { width: 2.6rem; height: 2.6rem; border: 1px solid #ccc; border-radius: .5rem;
+        display: inline-flex; align-items: center; justify-content: center; cursor: pointer; background: #fff; }
+.nota-escolha input:checked + label { background: var(--cor-marca); color: #fff; border-color: var(--cor-marca); }
