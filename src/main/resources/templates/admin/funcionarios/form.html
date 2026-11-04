@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Funcionário')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main class="container" style="max-width: 720px">
+    <h1 class="h3 mb-3" th:text="${novo} ? 'Novo funcionário' : 'Editar funcionário'"></h1>
+    <form th:action="@{/admin/funcionarios}" th:object="${funcionario}" method="post" class="card card-body">
+        <input type="hidden" name="novo" th:value="${novo}">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">CPF *</label>
+                <input class="form-control" th:field="*{cpf}" th:readonly="${!novo}" th:errorclass="is-invalid" placeholder="Somente números">
+                <div class="invalid-feedback" th:errors="*{cpf}"></div>
+            </div>
+            <div class="col-md-8">
+                <label class="form-label">Nome *</label>
+                <input class="form-control" th:field="*{nome}" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{nome}"></div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Telefone</label>
+                <input class="form-control" th:field="*{telefone}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Função *</label>
+                <select class="form-select" th:field="*{funcao}" th:errorclass="is-invalid">
+                    <option value="">Selecione...</option>
+                    <option th:each="f : ${funcoes}" th:value="${f}" th:text="${f.descricao}"></option>
+                </select>
+                <div class="invalid-feedback" th:errors="*{funcao}"></div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Turno *</label>
+                <select class="form-select" th:field="*{turno}" th:errorclass="is-invalid">
+                    <option value="">Selecione...</option>
+                    <option th:each="t : ${turnos}" th:value="${t}" th:text="${t.descricao}"></option>
+                </select>
+                <div class="invalid-feedback" th:errors="*{turno}"></div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" th:text="${novo} ? 'Senha *' : 'Nova senha (deixe em branco para manter)'"></label>
+                <input class="form-control" type="password" name="novaSenha" th:classappend="${erroSenha} ? 'is-invalid'" autocomplete="new-password">
+                <div class="invalid-feedback" th:text="${erroSenha}"></div>
+            </div>
+        </div>
+        <div class="mt-4 d-flex gap-2">
+            <button class="btn btn-marca">Salvar</button>
+            <a th:href="@{/admin/funcionarios}" class="btn btn-outline-secondary">Cancelar</a>
+        </div>
+    </form>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

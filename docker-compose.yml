@@ -1,0 +1,15 @@
+# Banco PostgreSQL para rodar com o perfil "postgres" (opcional)
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: restaurante
+      POSTGRES_USER: restaurante
+      POSTGRES_PASSWORD: restaurante
+    ports:
+      - "5432:5432"
+    volumes:
+      - dados-restaurante:/var/lib/postgresql/data
+
+volumes:
+  dados-restaurante:

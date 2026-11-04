@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Funcionários')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">Funcionários</h1>
+        <a th:href="@{/admin/funcionarios/novo}" class="btn btn-marca"><i class="bi bi-person-plus"></i> Novo funcionário</a>
+    </div>
+    <div th:replace="~{fragments/layout :: alertas}"></div>
+    <table class="table table-hover bg-white align-middle">
+        <thead><tr><th>Nome</th><th>CPF</th><th>Telefone</th><th>Função</th><th>Turno</th><th></th></tr></thead>
+        <tbody>
+        <tr th:each="f : ${funcionarios}">
+            <td th:text="${f.nome}"></td>
+            <td th:text="${f.cpf}"></td>
+            <td th:text="${f.telefone}"></td>
+            <td th:text="${f.funcao.descricao}"></td>
+            <td th:text="${f.turno.descricao}"></td>
+            <td class="text-end text-nowrap">
+                <a th:href="@{/admin/funcionarios/{cpf}/editar(cpf=${f.cpf})}" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></a>
+                <form th:action="@{/admin/funcionarios/{cpf}/excluir(cpf=${f.cpf})}" method="post" class="d-inline" onsubmit="return confirm('Excluir este funcionário?')">
+                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Cliente')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main class="container" style="max-width: 720px">
+    <h1 class="h3 mb-3" th:text="${novo} ? 'Novo cliente' : 'Editar cliente'"></h1>
+    <form th:action="@{/clientes}" th:object="${cliente}" method="post" class="card card-body">
+        <input type="hidden" name="novo" th:value="${novo}">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">CPF *</label>
+                <input class="form-control" th:field="*{cpf}" th:readonly="${!novo}" th:errorclass="is-invalid" placeholder="Somente números">
+                <div class="invalid-feedback" th:errors="*{cpf}"></div>
+            </div>
+            <div class="col-md-8">
+                <label class="form-label">Nome *</label>
+                <input class="form-control" th:field="*{nome}" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{nome}"></div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Telefone</label>
+                <input class="form-control" th:field="*{telefone}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Mesa preferida</label>
+                <input class="form-control" type="number" min="1" th:field="*{mesaPreferida}">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Alergias</label>
+                <input class="form-control" th:field="*{alergias}" placeholder="Ex.: amendoim, lactose">
+            </div>
+            <div class="col-12">
+                <label class="form-label">Preferências</label>
+                <textarea class="form-control" th:field="*{preferencias}" rows="2" placeholder="Ex.: vegetariano, mesa perto da janela"></textarea>
+            </div>
+        </div>
+        <div class="mt-4 d-flex gap-2">
+            <button class="btn btn-marca">Salvar</button>
+            <a th:href="@{/clientes}" class="btn btn-outline-secondary">Cancelar</a>
+        </div>
+    </form>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

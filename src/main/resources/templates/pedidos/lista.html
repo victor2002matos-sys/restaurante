@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Pedidos')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">Pedidos</h1>
+        <a th:href="@{/pedidos/novo}" class="btn btn-marca"><i class="bi bi-plus-lg"></i> Novo pedido</a>
+    </div>
+    <div th:replace="~{fragments/layout :: alertas}"></div>
+    <table class="table table-hover bg-white align-middle">
+        <thead><tr><th>#</th><th>Data</th><th>Mesa</th><th>Cliente</th><th>Garçom</th><th>Status</th><th class="text-end">Total</th><th></th></tr></thead>
+        <tbody>
+        <tr th:each="p : ${pedidos}">
+            <td><a th:href="@{/pedidos/{id}(id=${p.id})}" th:text="${p.id}"></a></td>
+            <td th:text="${#temporals.format(p.dataHora, 'dd/MM HH:mm')}"></td>
+            <td th:text="${p.mesa.numero}"></td>
+            <td th:text="${p.cliente.nome}"></td>
+            <td th:text="${p.funcionario.nome}"></td>
+            <td><span th:replace="~{fragments/layout :: status(${p.status})}"></span></td>
+            <td class="text-end" th:text="${'R$ ' + #numbers.formatDecimal(p.total, 1, 'POINT', 2, 'COMMA')}"></td>
+            <td class="text-end text-nowrap">
+                <form th:if="${p.status.proximo() != null}" th:action="@{/pedidos/{id}/avancar(id=${p.id})}" method="post" class="d-inline">
+                    <input type="hidden" name="voltar" value="lista">
+                    <button class="btn btn-sm btn-outline-primary" th:text="'→ ' + ${p.status.proximo().descricao}"></button>
+                </form>
+                <a th:href="@{/pedidos/{id}(id=${p.id})}" class="btn btn-sm btn-outline-secondary">Detalhes</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Mesas')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main class="container">
+    <h1 class="h3 mb-3">Mesas</h1>
+    <div th:replace="~{fragments/layout :: alertas}"></div>
+    <form th:action="@{/admin/mesas}" method="post" class="row g-2 mb-4" style="max-width: 560px">
+        <div class="col"><input class="form-control" type="number" min="1" name="numero" placeholder="Número" required></div>
+        <div class="col"><input class="form-control" type="number" min="1" name="capacidade" placeholder="Lugares"></div>
+        <div class="col-auto"><button class="btn btn-marca"><i class="bi bi-plus-lg"></i> Adicionar mesa</button></div>
+    </form>
+    <div class="d-flex flex-wrap gap-3">
+        <div th:each="m : ${mesas}" class="text-center">
+            <div class="mesa" th:classappend="${ocupadas.contains(m.numero)} ? 'ocupada' : 'livre'">
+                <div class="fs-4" th:text="${m.numero}"></div>
+                <div class="small" th:text="${ocupadas.contains(m.numero)} ? 'Ocupada' : 'Livre'"></div>
+            </div>
+            <div class="small text-muted" th:if="${m.capacidade}" th:text="${m.capacidade} + ' lugares'"></div>
+            <form th:action="@{/admin/mesas/{n}/excluir(n=${m.numero})}" method="post" onsubmit="return confirm('Excluir esta mesa?')">
+                <button class="btn btn-link btn-sm text-danger p-0">excluir</button>
+            </form>
+        </div>
+    </div>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

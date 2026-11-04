@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Promoção')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main class="container" style="max-width: 820px">
+    <h1 class="h3 mb-3" th:text="${promocao.id == null} ? 'Nova promoção' : 'Editar promoção'"></h1>
+    <form th:action="@{/admin/promocoes}" th:object="${promocao}" method="post" class="card card-body">
+        <input type="hidden" th:field="*{id}">
+        <div th:if="${#fields.hasGlobalErrors()} or ${#fields.hasErrors('periodoValido')} or ${#fields.hasErrors('percentualValido')}" class="alert alert-danger">
+            <div th:each="e : ${#fields.errors('periodoValido')}" th:text="${e}"></div>
+            <div th:each="e : ${#fields.errors('percentualValido')}" th:text="${e}"></div>
+        </div>
+        <div class="row g-3">
+            <div class="col-12">
+                <label class="form-label">Nome *</label>
+                <input class="form-control" th:field="*{nome}" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{nome}"></div>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Data inicial *</label>
+                <input class="form-control" type="date" th:field="*{dataInicio}" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{dataInicio}"></div>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Data final *</label>
+                <input class="form-control" type="date" th:field="*{dataFim}" th:errorclass="is-invalid">
+                <div class="invalid-feedback" th:errors="*{dataFim}"></div>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Tipo de desconto *</label>
+                <select class="form-select" th:field="*{tipoDesconto}">
+                    <option th:each="t : ${tipos}" th:value="${t}" th:text="${t.descricao}"></option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Desconto *</label>
+                <input class="form-control" th:field="*{desconto}" th:errorclass="is-invalid" inputmode="decimal">
+                <div class="invalid-feedback">Informe um desconto maior que zero.</div>
+            </div>
+            <div class="col-12">
+                <label class="form-label">Pratos da promoção</label>
+                <div class="border rounded p-2 bg-white" style="max-height: 240px; overflow-y: auto">
+                    <div class="row">
+                        <div class="col-6 col-md-4" th:each="p : ${pratos}">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" th:field="*{pratos}" th:value="${p.id}">
+                                <label class="form-check-label" th:for="${#ids.prev('pratos')}" th:text="${p.nome}"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 d-flex gap-2">
+            <button class="btn btn-marca">Salvar</button>
+            <a th:href="@{/admin/promocoes}" class="btn btn-outline-secondary">Cancelar</a>
+        </div>
+    </form>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

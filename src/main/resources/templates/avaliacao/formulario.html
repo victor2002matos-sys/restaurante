@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Avaliar atendimento')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: nav}"></nav>
+<main class="container" style="max-width: 620px">
+    <div class="card shadow-sm"><div class="card-body p-4">
+        <h1 class="h4">Pedido #<span th:text="${pedido.id}"></span></h1>
+        <p class="text-muted mb-2">
+            Olá, <strong th:text="${pedido.cliente.nome}"></strong>! Mesa <span th:text="${pedido.mesa.numero}"></span>,
+            <span th:text="${#temporals.format(pedido.dataHora, 'dd/MM/yyyy HH:mm')}"></span>.
+        </p>
+        <ul class="small text-muted">
+            <li th:each="item : ${pedido.itens}" th:text="${item.quantidade} + 'x ' + ${item.prato.nome}"></li>
+        </ul>
+        <div th:replace="~{fragments/layout :: alertas}"></div>
+        <form th:action="@{/avaliacao}" method="post">
+            <input type="hidden" name="pedidoId" th:value="${pedido.id}">
+            <input type="hidden" name="cpf" th:value="${cpf}">
+            <label class="form-label">Sua nota (1 a 10)</label>
+            <div class="nota-escolha d-flex flex-wrap gap-1 mb-3">
+                <th:block th:each="n : ${#numbers.sequence(1, 10)}">
+                    <input type="radio" name="nota" th:id="'nota' + ${n}" th:value="${n}" th:checked="${nota == n}">
+                    <label th:for="'nota' + ${n}" th:text="${n}"></label>
+                </th:block>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="comentario">Comentário (opcional)</label>
+                <textarea class="form-control" id="comentario" name="comentario" rows="3" maxlength="500"
+                          th:text="${comentario}" placeholder="Conte como foi a comida e o atendimento"></textarea>
+            </div>
+            <button class="btn btn-marca w-100">Enviar avaliação</button>
+        </form>
+    </div></div>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
