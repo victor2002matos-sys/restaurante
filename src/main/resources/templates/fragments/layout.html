@@ -3,16 +3,15 @@
 <head th:fragment="head(titulo)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title th:text="${titulo} + ' | Restaurante'">Restaurante</title>
+    <title th:text="${titulo} + ' | Trattoria Bella Pasta'">Restaurante</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css}">
     <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body>
 
-<nav th:fragment="nav" class="navbar navbar-expand-lg navbar-dark bg-marca mb-4">
+<nav th:fragment="nav" class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4">
     <div class="container">
-        <a class="navbar-brand" th:href="@{/}"><i class="bi bi-egg-fried"></i> Restaurante</a>
+        <a class="navbar-brand" th:href="@{/}">Trattoria Bella Pasta</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -37,26 +36,22 @@
                 </li>
             </ul>
             <div sec:authorize="isAuthenticated()" class="d-flex align-items-center gap-2">
-                <span class="navbar-text small">
-                    <i class="bi bi-person-circle"></i>
-                    CPF <span sec:authentication="name"></span>
+                <span class="navbar-text small">CPF <span sec:authentication="name"></span>
                 </span>
                 <form th:action="@{/logout}" method="post">
-                    <button class="btn btn-sm btn-outline-light">Sair</button>
+                    <button class="btn btn-sm btn-outline-secondary">Sair</button>
                 </form>
             </div>
-            <a sec:authorize="!isAuthenticated()" class="btn btn-sm btn-outline-light" th:href="@{/login}">Área do funcionário</a>
+            <a sec:authorize="!isAuthenticated()" class="btn btn-sm btn-outline-secondary" th:href="@{/login}">Área do funcionário</a>
         </div>
     </div>
 </nav>
 
 <div th:fragment="alertas">
-    <div th:if="${sucesso}" class="alert alert-success alert-dismissible fade show">
-        <i class="bi bi-check-circle"></i> <span th:text="${sucesso}"></span>
+    <div th:if="${sucesso}" class="alert alert-light border alert-dismissible fade show"> <span th:text="${sucesso}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
-    <div th:if="${erro}" class="alert alert-danger alert-dismissible fade show">
-        <i class="bi bi-exclamation-triangle"></i> <span th:text="${erro}"></span>
+    <div th:if="${erro}" class="alert alert-light border alert-dismissible fade show"> <span th:text="${erro}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 </div>

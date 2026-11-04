@@ -4,7 +4,7 @@
 <body>
 <nav th:replace="~{fragments/layout :: nav}"></nav>
 <main class="container" style="max-width: 520px">
-    <div class="card shadow-sm"><div class="card-body p-4">
+    <div class="card"><div class="card-body p-4">
         <h1 class="h4">Avalie seu atendimento</h1>
         <p class="text-muted">Informe o número do pedido que aparece na sua nota e o seu CPF.</p>
         <div th:replace="~{fragments/layout :: alertas}"></div>
@@ -17,7 +17,7 @@
                 <label class="form-label" for="cpf">CPF</label>
                 <input class="form-control" id="cpf" name="cpf" th:value="${cpf}" placeholder="Somente números" required>
             </div>
-            <button class="btn btn-marca w-100">Continuar</button>
+            <button class="btn btn-dark w-100">Continuar</button>
         </form>
     </div></div>
 </main>

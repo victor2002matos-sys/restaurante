@@ -38,7 +38,7 @@ class RegrasDeNegocioTest {
         Pedido p = pedidoService.registrar(pedido(1, CLIENTE, 1L, 2), GARCOM);
         assertThat(p.getStatus()).isEqualTo(StatusPedido.AGUARDANDO_PREPARO);
         assertThat(p.getFuncionario().getCpf()).isEqualTo(GARCOM);
-        assertThat(p.getTotal()).isEqualByComparingTo(new BigDecimal("65.80"));
+        assertThat(p.getTotal()).isEqualByComparingTo(new BigDecimal("116.00"));
     }
 
     @Test

@@ -4,7 +4,7 @@
 <body>
 <nav th:replace="~{fragments/layout :: nav}"></nav>
 <main class="container" style="max-width: 620px">
-    <div class="card shadow-sm"><div class="card-body p-4">
+    <div class="card"><div class="card-body p-4">
         <h1 class="h4">Pedido #<span th:text="${pedido.id}"></span></h1>
         <p class="text-muted mb-2">
             Olá, <strong th:text="${pedido.cliente.nome}"></strong>! Mesa <span th:text="${pedido.mesa.numero}"></span>,
@@ -29,7 +29,7 @@
                 <textarea class="form-control" id="comentario" name="comentario" rows="3" maxlength="500"
                           th:text="${comentario}" placeholder="Conte como foi a comida e o atendimento"></textarea>
             </div>
-            <button class="btn btn-marca w-100">Enviar avaliação</button>
+            <button class="btn btn-dark w-100">Enviar avaliação</button>
         </form>
     </div></div>
 </main>

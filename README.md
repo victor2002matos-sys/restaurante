@@ -1,4 +1,4 @@
-# Sistema de Gerenciamento de Restaurante
+# Sistema de Gerenciamento de Restaurante — demonstração "Trattoria Bella Pasta"
 
 Protótipo funcional (entrega parcial) do sistema descrito no documento de requisitos.
 Aplicação web em **Java 21 + Spring Boot 4.1**, gerada pelo [Spring Initializr](https://start.spring.io), no padrão **MVC**:
@@ -9,7 +9,7 @@ Aplicação web em **Java 21 + Spring Boot 4.1**, gerada pelo [Spring Initializr
 | Persistência | `src/main/java/br/com/restaurante/repository` | Spring Data JPA |
 | Regras de negócio | `src/main/java/br/com/restaurante/service` | Spring `@Service` |
 | Controller | `src/main/java/br/com/restaurante/controller` | Spring MVC `@Controller` |
-| View | `src/main/resources/templates` | Thymeleaf + Bootstrap |
+| View | `src/main/resources/templates` | Thymeleaf + Bootstrap, visual neutro |
 
 ## Como rodar
 
@@ -29,7 +29,7 @@ No **VS Code**: instale o "Extension Pack for Java" (o VS Code sugere sozinho ao
 abra `RestauranteApplication.java` e clique em **Run**, ou use a aba Run and Debug → "Restaurante (H2)".
 
 Por padrão o sistema usa o banco **H2 em memória**, que não precisa de instalação.
-Os dados de exemplo são recriados a cada vez que o sistema inicia.
+Os dados de exemplo são de um restaurante italiano fictício, a Trattoria Bella Pasta: 30 itens no cardápio (15 massas, antipasti, risotti, sobremesas e bebidas), 2 promoções, 12 mesas e alguns pedidos. Eles são recriados a cada vez que o sistema inicia.
 
 ### Usando PostgreSQL (opcional)
 

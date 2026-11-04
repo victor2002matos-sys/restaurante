@@ -25,9 +25,9 @@
     </div>
 
     <div class="d-flex gap-2 mb-4">
-        <a sec:authorize="hasAnyRole('GARCOM','GERENTE')" th:href="@{/pedidos/novo}" class="btn btn-marca"><i class="bi bi-plus-lg"></i> Novo pedido</a>
-        <a sec:authorize="hasAnyRole('GARCOM','GERENTE')" th:href="@{/clientes/novo}" class="btn btn-outline-secondary"><i class="bi bi-person-plus"></i> Novo cliente</a>
-        <a sec:authorize="hasAnyRole('COZINHEIRO','GERENTE')" th:href="@{/cozinha}" class="btn btn-outline-secondary"><i class="bi bi-fire"></i> Cozinha</a>
+        <a sec:authorize="hasAnyRole('GARCOM','GERENTE')" th:href="@{/pedidos/novo}" class="btn btn-dark">Novo pedido</a>
+        <a sec:authorize="hasAnyRole('GARCOM','GERENTE')" th:href="@{/clientes/novo}" class="btn btn-outline-secondary">Novo cliente</a>
+        <a sec:authorize="hasAnyRole('COZINHEIRO','GERENTE')" th:href="@{/cozinha}" class="btn btn-outline-secondary">Cozinha</a>
     </div>
 
     <h2 class="h5">Pedidos em andamento</h2>
