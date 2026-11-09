@@ -129,7 +129,7 @@ Casos de uso:
 - Status do pedido: Aguardando preparo → Em preparo → Pronto → Entregue → Finalizado, ou Cancelado.
 - O preço cobrado fica gravado no item do pedido, já com a promoção do dia. Se houver mais de uma promoção, vale o menor preço.
 - Cozinheiro e gerente são funcionários; a função define o perfil de acesso.
-- A avaliação não exige login: o CPF confirma que quem avalia é o cliente do pedido.
+- A avaliação não exige login nem CPF: basta o número do pedido.
 - Prato que já foi pedido não é apagado, só fica indisponível, para manter o histórico.
 
 ## Modelo de dados
