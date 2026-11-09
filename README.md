@@ -13,6 +13,8 @@ Aplicação web em **Java 21 + Spring Boot 4.1**, gerada pelo [Spring Initializr
 
 ## Como rodar
 
+**Windows, jeito mais fácil:** dê dois cliques em `iniciar.bat`. Ele liga o sistema e abre o navegador em http://localhost:8080 quando estiver pronto. Para desligar, feche a janela.
+
 Pré-requisito: **JDK 21** instalado. O Maven não precisa ser instalado, o projeto traz o Maven Wrapper.
 
 ```bash
