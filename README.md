@@ -113,16 +113,16 @@ O pedido **#2** (CPF 66666666666) está finalizado e ainda sem avaliação, bom 
 
 Regras de negócio:
 
-- **RN001** pedido só para cliente cadastrado (`PedidoService.registrar`)
-- **RN002** pedido sempre ligado a cliente, mesa e funcionário (colunas `NOT NULL`)
+- **RN001** (alterada) o cliente é opcional: o pedido pode ser feito sem CPF, e um CPF ainda não cadastrado é cadastrado junto com o pedido (`PedidoService.identificarCliente`)
+- **RN002** pedido sempre ligado a mesa e funcionário (colunas `NOT NULL`)
 - **RN003** prato exige nome e preço (`@NotBlank`, `@NotNull`)
 - **RN004** nota entre 1 e 10 (`CHECK` na tabela `avaliacao` + `AvaliacaoService`)
 
 Casos de uso:
 
-- **UC-1 Registrar Pedido**: mesa ocupada fica bloqueada; o resumo e o total são calculados na tela; o pedido nasce "Aguardando preparo" e ligado ao funcionário logado.
+- **UC-1 Registrar Pedido**: CPF do cliente opcional; mesa ocupada fica bloqueada; o resumo e o total são calculados na tela; o pedido nasce "Aguardando preparo" e ligado ao funcionário logado.
 - **UC-2 Cadastrar Prato**: preço inválido e nome repetido mostram erro e voltam ao formulário.
-- **UC-3 Avaliar Atendimento**: o cliente informa o número do pedido e o CPF; só pedidos finalizados podem ser avaliados, uma vez cada.
+- **UC-3 Avaliar Atendimento**: o cliente informa o número do pedido e o CPF (dispensado se o pedido foi feito sem CPF); só pedidos finalizados podem ser avaliados, uma vez cada.
 
 ## Decisões tomadas onde o documento não detalha
 

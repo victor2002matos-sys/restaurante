@@ -15,8 +15,9 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "cliente_cpf", nullable = false)
+    /** Opcional: o pedido pode ser feito sem cliente cadastrado. */
+    @ManyToOne
+    @JoinColumn(name = "cliente_cpf")
     private Cliente cliente;
 
     @ManyToOne(optional = false)

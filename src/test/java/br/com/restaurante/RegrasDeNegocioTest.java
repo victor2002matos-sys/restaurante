@@ -42,10 +42,18 @@ class RegrasDeNegocioTest {
     }
 
     @Test
-    void rn001ClienteNaoCadastradoNaoFazPedido() {
-        assertThatThrownBy(() -> pedidoService.registrar(pedido(1, "99999999999", 1L, 1), GARCOM))
-                .isInstanceOf(RegraNegocioException.class)
-                .hasMessageContaining("não está cadastrado");
+    void pedidoPodeSerFeitoSemCliente() {
+        Pedido p = pedidoService.registrar(pedido(1, "", 1L, 1), GARCOM);
+        assertThat(p.getCliente()).isNull();
+    }
+
+    @Test
+    void cpfNovoECadastradoJuntoComOPedido() {
+        NovoPedidoForm form = pedido(1, "999.999.999-99", 1L, 1);
+        form.setClienteNome("Giulia Rossi");
+        Pedido p = pedidoService.registrar(form, GARCOM);
+        assertThat(p.getCliente().getCpf()).isEqualTo("99999999999");
+        assertThat(p.getCliente().getNome()).isEqualTo("Giulia Rossi");
     }
 
     @Test

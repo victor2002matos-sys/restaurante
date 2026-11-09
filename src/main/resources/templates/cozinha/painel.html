@@ -31,7 +31,7 @@
                         <ul class="mb-1 ps-3">
                             <li th:each="item : ${p.itens}" th:text="${item.quantidade} + 'x ' + ${item.prato.nome}"></li>
                         </ul>
-                        <div th:if="${p.cliente.alergias}" class="small  mb-1">Alergia: <span th:text="${p.cliente.alergias}"></span>
+                        <div th:if="${p.cliente?.alergias}" class="small  mb-1">Alergia: <span th:text="${p.cliente.alergias}"></span>
                         </div>
                         <form th:if="${coluna[2] != null}" th:action="@{/cozinha/{id}/avancar(id=${p.id})}" method="post">
                             <button class="btn btn-sm btn-dark w-100" th:text="${coluna[2]}"></button>

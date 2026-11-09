@@ -47,11 +47,7 @@ public class PedidoService {
         Mesa mesa = mesaRepository.findById(form.getMesaNumero())
                 .orElseThrow(() -> new RegraNegocioException("Mesa " + form.getMesaNumero() + " não existe."));
 
-        String cpf = form.getClienteCpf() == null ? "" : form.getClienteCpf().replaceAll("\\D", "");
-        // RN001: só cliente cadastrado faz pedido
-        Cliente cliente = clienteRepository.findById(cpf)
-                .orElseThrow(() -> new RegraNegocioException("Cliente com CPF " + form.getClienteCpf()
-                        + " não está cadastrado. Cadastre o cliente antes de abrir o pedido."));
+        Cliente cliente = identificarCliente(form);
 
         // UC-1, fluxo alternativo do passo 4
         if (mesaOcupada(mesa)) {
@@ -89,6 +85,27 @@ public class PedidoService {
             throw new RegraNegocioException("Adicione pelo menos um prato ao pedido.");
         }
         return pedidoRepository.save(pedido);
+    }
+
+    /**
+     * O cliente é opcional: sem CPF o pedido fica sem cliente; com um CPF ainda não
+     * cadastrado, o cliente é cadastrado na hora com o nome informado.
+     */
+    private Cliente identificarCliente(NovoPedidoForm form) {
+        String cpf = form.getClienteCpf() == null ? "" : form.getClienteCpf().replaceAll("\\D", "");
+        if (cpf.isEmpty()) {
+            return null;
+        }
+        if (cpf.length() != 11) {
+            throw new RegraNegocioException("CPF deve ter 11 dígitos, ou deixe o campo em branco.");
+        }
+        return clienteRepository.findById(cpf).orElseGet(() -> {
+            Cliente novo = new Cliente();
+            novo.setCpf(cpf);
+            String nome = form.getClienteNome() == null ? "" : form.getClienteNome().trim();
+            novo.setNome(nome.isEmpty() ? "Cliente " + cpf : nome);
+            return clienteRepository.save(novo);
+        });
     }
 
     /** Avança para o próximo status do fluxo (RF012). */

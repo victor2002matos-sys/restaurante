@@ -35,7 +35,8 @@ public class AvaliacaoService {
         Pedido pedido = pedidoRepository.findById(pedidoId)
                 .orElseThrow(() -> new RegraNegocioException("Pedido #" + pedidoId + " não encontrado."));
         String cpfLimpo = cpf == null ? "" : cpf.replaceAll("\\D", "");
-        if (!pedido.getCliente().getCpf().equals(cpfLimpo)) {
+        // pedido sem cliente identificado: basta o número do pedido
+        if (pedido.getCliente() != null && !pedido.getCliente().getCpf().equals(cpfLimpo)) {
             throw new RegraNegocioException("O CPF informado não corresponde ao cliente do pedido.");
         }
         if (pedido.getStatus() != StatusPedido.FINALIZADO) {

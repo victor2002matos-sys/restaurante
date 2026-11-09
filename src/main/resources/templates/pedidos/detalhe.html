@@ -13,11 +13,11 @@
     <div class="card card-body mb-3">
         <div class="row">
             <div class="col-md-3"><div class="text-muted small">Mesa</div><div class="fw-semibold" th:text="${pedido.mesa.numero}"></div></div>
-            <div class="col-md-3"><div class="text-muted small">Cliente</div><div class="fw-semibold" th:text="${pedido.cliente.nome}"></div></div>
+            <div class="col-md-3"><div class="text-muted small">Cliente</div><div class="fw-semibold" th:text="${pedido.cliente?.nome ?: 'Não identificado'}"></div></div>
             <div class="col-md-3"><div class="text-muted small">Funcionário</div><div class="fw-semibold" th:text="${pedido.funcionario.nome}"></div></div>
             <div class="col-md-3"><div class="text-muted small">Data e hora</div><div class="fw-semibold" th:text="${#temporals.format(pedido.dataHora, 'dd/MM/yyyy HH:mm')}"></div></div>
         </div>
-        <div th:if="${pedido.cliente.alergias}" class="alert alert-light border mt-3 mb-0 py-2">Alergias do cliente: <strong th:text="${pedido.cliente.alergias}"></strong>
+        <div th:if="${pedido.cliente?.alergias}" class="alert alert-light border mt-3 mb-0 py-2">Alergias do cliente: <strong th:text="${pedido.cliente.alergias}"></strong>
         </div>
     </div>
     <table class="table bg-white">

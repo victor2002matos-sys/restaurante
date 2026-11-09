@@ -30,7 +30,7 @@ public class AvaliacaoController {
 
     /** Passo 4: valida o pedido e libera nota e comentário. */
     @PostMapping("/validar")
-    public String validar(@RequestParam(required = false) Long pedidoId, @RequestParam String cpf, Model model) {
+    public String validar(@RequestParam(required = false) Long pedidoId, @RequestParam(required = false) String cpf, Model model) {
         try {
             Pedido pedido = avaliacaoService.validarPedido(pedidoId, cpf);
             model.addAttribute("pedido", pedido);
@@ -46,7 +46,7 @@ public class AvaliacaoController {
 
     /** Passos 6 a 8: confere a nota, salva e agradece. */
     @PostMapping
-    public String enviar(@RequestParam Long pedidoId, @RequestParam String cpf,
+    public String enviar(@RequestParam Long pedidoId, @RequestParam(required = false) String cpf,
                          @RequestParam(required = false) Integer nota,
                          @RequestParam(required = false) String comentario, Model model) {
         try {
