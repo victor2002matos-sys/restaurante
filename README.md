@@ -15,12 +15,12 @@ Aplicação web em **Java 21 + Spring Boot 4.1**, gerada pelo [Spring Initializr
 
 Funciona em qualquer computador. Não precisa instalar banco de dados nem Maven: só o Java.
 
-### 1. Instale o Java 21 (só na primeira vez)
+### 1. Instale o Java 21 ou mais novo (só na primeira vez)
 
 1. Acesse https://adoptium.net/temurin/releases/?version=21
 2. Baixe o instalador do seu sistema (no Windows, o arquivo `.msi` x64).
 3. Durante a instalação, marque a opção **Set JAVA_HOME variable**.
-4. Para conferir, abra o terminal (no Windows, o PowerShell) e rode `java -version`. Deve aparecer a versão 21 ou maior.
+4. Para conferir, abra o terminal (no Windows, o PowerShell) e rode `java -version`. Deve aparecer a versão 21 ou maior. Se `java -version` não for reconhecido, reinicie o computador.
 
 ### 2. Baixe o projeto
 
@@ -38,6 +38,8 @@ cd restaurante
 **Windows:** dentro da pasta do projeto, dê dois cliques em **`iniciar.bat`**.
 Uma janela preta mostra o andamento e o navegador abre sozinho quando estiver pronto.
 Não feche a janela enquanto estiver usando o sistema; fechar a janela desliga o sistema.
+
+Dica: para ter um atalho, clique com o botão direito em `iniciar.bat` → **Mostrar mais opções → Enviar para → Área de trabalho (criar atalho)**.
 
 **Linux / macOS:** no terminal, dentro da pasta do projeto:
 
@@ -60,6 +62,7 @@ O sistema usa um banco **H2 em memória**: os dados de exemplo são recriados a 
 
 | O que aparece | Como resolver |
 | --- | --- |
+| "O Windows protegeu o computador" ao abrir o `iniciar.bat` | Clique em **Mais informações → Executar assim mesmo**. |
 | `java` não é reconhecido / `JAVA_HOME not found` | O Java não está instalado ou o `JAVA_HOME` não foi configurado. Reinstale o Java marcando **Set JAVA_HOME variable** e abra um terminal novo. |
 | Erro `PKIX path building failed` ao baixar | Um antivírus (por exemplo o Avast) está inspecionando HTTPS. O `iniciar.bat` já contorna isso. No terminal do Windows, rode antes `$env:MAVEN_OPTS='-Djavax.net.ssl.trustStoreType=Windows-ROOT'`. |
 | `Invalid argument: connect` ao iniciar | Problema de socket local em alguns Windows. O `iniciar.bat` já contorna isso. No terminal, rode `.\mvnw.cmd spring-boot:run "-Dspring-boot.run.jvmArguments=-Djdk.net.unixdomain.tmpdir=target/uds"` depois de criar a pasta `target\uds`. |
