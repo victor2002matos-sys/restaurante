@@ -11,39 +11,73 @@ Aplicação web em **Java 21 + Spring Boot 4.1**, gerada pelo [Spring Initializr
 | Controller | `src/main/java/br/com/restaurante/controller` | Spring MVC `@Controller` |
 | View | `src/main/resources/templates` | Thymeleaf + Bootstrap, visual neutro |
 
-## Como rodar
+## Passo a passo para rodar (iniciantes)
 
-**Windows, jeito mais fácil:** dê dois cliques em `iniciar.bat`. Ele liga o sistema e abre o navegador em http://localhost:8080 quando estiver pronto. Para desligar, feche a janela.
+Funciona em qualquer computador. Não precisa instalar banco de dados nem Maven: só o Java.
 
-Pré-requisito: **JDK 21** instalado. O Maven não precisa ser instalado, o projeto traz o Maven Wrapper.
+### 1. Instale o Java 21 (só na primeira vez)
+
+1. Acesse https://adoptium.net/temurin/releases/?version=21
+2. Baixe o instalador do seu sistema (no Windows, o arquivo `.msi` x64).
+3. Durante a instalação, marque a opção **Set JAVA_HOME variable**.
+4. Para conferir, abra o terminal (no Windows, o PowerShell) e rode `java -version`. Deve aparecer a versão 21 ou maior.
+
+### 2. Baixe o projeto
+
+**Sem Git:** nesta página, clique no botão verde **Code → Download ZIP** e descompacte o arquivo numa pasta.
+
+**Com Git:**
 
 ```bash
-# Linux / macOS
+git clone https://github.com/victor2002matos-sys/restaurante.git
+cd restaurante
+```
+
+### 3. Ligue o sistema
+
+**Windows:** dentro da pasta do projeto, dê dois cliques em **`iniciar.bat`**.
+Uma janela preta mostra o andamento e o navegador abre sozinho quando estiver pronto.
+Não feche a janela enquanto estiver usando o sistema; fechar a janela desliga o sistema.
+
+**Linux / macOS:** no terminal, dentro da pasta do projeto:
+
+```bash
 ./mvnw spring-boot:run
-
-# Windows
-mvnw.cmd spring-boot:run
 ```
 
-Abra http://localhost:8080.
+Na **primeira vez** demora alguns minutos, porque ele baixa as bibliotecas. Nas próximas, leva menos de 1 minuto.
 
-No **VS Code**: instale o "Extension Pack for Java" (o VS Code sugere sozinho ao abrir a pasta),
-abra `RestauranteApplication.java` e clique em **Run**, ou use a aba Run and Debug → "Restaurante (H2)".
+### 4. Use o sistema
 
-Por padrão o sistema usa o banco **H2 em memória**, que não precisa de instalação.
-Os dados de exemplo são de um restaurante italiano fictício, a OHMELETE: 30 itens no cardápio (15 massas, antipasti, risotti, sobremesas e bebidas), 2 promoções, 12 mesas e alguns pedidos. Eles são recriados a cada vez que o sistema inicia.
+Abra http://localhost:8080 (se o navegador não abrir sozinho).
 
-### Usando PostgreSQL (opcional)
+- **Cardápio** e **Avaliar** são públicos.
+- Para a área interna, clique em **Área do funcionário** e entre com o CPF `11111111111` e a senha `123456` (perfil Gerente). Os outros usuários estão na tabela abaixo.
+
+O sistema usa um banco **H2 em memória**: os dados de exemplo são recriados a cada vez que ele liga, e o que você cadastrar some quando ele é desligado.
+
+### Problemas comuns
+
+| O que aparece | Como resolver |
+| --- | --- |
+| `java` não é reconhecido / `JAVA_HOME not found` | O Java não está instalado ou o `JAVA_HOME` não foi configurado. Reinstale o Java marcando **Set JAVA_HOME variable** e abra um terminal novo. |
+| Erro `PKIX path building failed` ao baixar | Um antivírus (por exemplo o Avast) está inspecionando HTTPS. O `iniciar.bat` já contorna isso. No terminal do Windows, rode antes `$env:MAVEN_OPTS='-Djavax.net.ssl.trustStoreType=Windows-ROOT'`. |
+| `Invalid argument: connect` ao iniciar | Problema de socket local em alguns Windows. O `iniciar.bat` já contorna isso. No terminal, rode `.\mvnw.cmd spring-boot:run "-Dspring-boot.run.jvmArguments=-Djdk.net.unixdomain.tmpdir=target/uds"` depois de criar a pasta `target\uds`. |
+| `Port 8080 was already in use` | O sistema já está ligado em outra janela. Use essa, ou feche-a e ligue de novo. |
+| `localhost:8080` não abre em outro computador | Normal: `localhost` é sempre o próprio computador. O sistema precisa estar ligado na máquina onde você abre o navegador. |
+
+### Abrindo no VS Code (opcional)
+
+1. **File → Open Folder** e escolha a pasta do projeto.
+2. Instale o **Extension Pack for Java**, que o VS Code sugere sozinho.
+3. Abra `src/main/java/br/com/restaurante/RestauranteApplication.java` e clique em **Run** acima do método `main`, ou rode o `iniciar.bat` pelo terminal integrado (**Terminal → New Terminal**).
+
+### Para desenvolvedores
 
 ```bash
-docker compose up -d
+./mvnw test                                              # testes automáticos
+docker compose up -d                                     # PostgreSQL opcional
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=postgres
-```
-
-### Testes
-
-```bash
-./mvnw test
 ```
 
 ## Usuários de demonstração
