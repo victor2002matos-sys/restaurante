@@ -20,15 +20,6 @@
                                         th:text="'Mesa ' + ${m.numero} + (${ocupadas.contains(m.numero)} ? ' (ocupada)' : '')"></option>
                             </select>
                         </div>
-                        <div class="col-md-7">
-                            <label class="form-label">Cliente (CPF, opcional)</label>
-                            <input class="form-control" th:field="*{clienteCpf}" list="lista-clientes" placeholder="Deixe em branco se não quiser identificar">
-                            <datalist id="lista-clientes">
-                                <option th:each="c : ${clientes}" th:value="${c.cpf}" th:text="${c.nome}"></option>
-                            </datalist>
-                            <input class="form-control mt-2" th:field="*{clienteNome}" placeholder="Nome (opcional, para CPF ainda não cadastrado)">
-                            <div class="form-text">Não precisa cadastrar antes: um CPF novo é cadastrado junto com o pedido.</div>
-                        </div>
                     </div>
                 </div>
                 <div class="card">

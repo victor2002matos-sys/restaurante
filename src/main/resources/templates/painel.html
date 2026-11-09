@@ -38,7 +38,7 @@
         <tr th:each="p : ${pedidosAbertos}">
             <td th:text="${p.id}"></td>
             <td th:text="${p.mesa.numero}"></td>
-            <td th:text="${p.cliente?.nome ?: 'Não identificado'}"></td>
+            <td th:text="${p.cliente?.nome ?: '—'}"></td>
             <td th:text="${#temporals.format(p.dataHora, 'HH:mm')}"></td>
             <td><span th:replace="~{fragments/layout :: status(${p.status})}"></span></td>
             <td class="text-end" th:text="${'R$ ' + #numbers.formatDecimal(p.total, 1, 'POINT', 2, 'COMMA')}"></td>

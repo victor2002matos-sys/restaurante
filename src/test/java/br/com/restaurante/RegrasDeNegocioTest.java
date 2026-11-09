@@ -20,22 +20,20 @@ class RegrasDeNegocioTest {
 
     // Dados criados por DadosIniciais
     private static final String GARCOM = "22222222222";
-    private static final String CLIENTE = "44444444444";
 
     @Autowired PedidoService pedidoService;
     @Autowired AvaliacaoService avaliacaoService;
 
-    private NovoPedidoForm pedido(int mesa, String cpf, long pratoId, int quantidade) {
+    private NovoPedidoForm pedido(int mesa, long pratoId, int quantidade) {
         NovoPedidoForm form = new NovoPedidoForm();
         form.setMesaNumero(mesa);
-        form.setClienteCpf(cpf);
         form.getQuantidades().put(pratoId, quantidade);
         return form;
     }
 
     @Test
     void registraPedidoComStatusAguardandoPreparoECalculaTotal() {
-        Pedido p = pedidoService.registrar(pedido(1, CLIENTE, 1L, 2), GARCOM);
+        Pedido p = pedidoService.registrar(pedido(1, 1L, 2), GARCOM);
         assertThat(p.getStatus()).isEqualTo(StatusPedido.AGUARDANDO_PREPARO);
         assertThat(p.getFuncionario().getCpf()).isEqualTo(GARCOM);
         assertThat(p.getTotal()).isEqualByComparingTo(new BigDecimal("116.00"));
@@ -43,36 +41,27 @@ class RegrasDeNegocioTest {
 
     @Test
     void pedidoPodeSerFeitoSemCliente() {
-        Pedido p = pedidoService.registrar(pedido(1, "", 1L, 1), GARCOM);
+        Pedido p = pedidoService.registrar(pedido(1, 1L, 1), GARCOM);
         assertThat(p.getCliente()).isNull();
-    }
-
-    @Test
-    void cpfNovoECadastradoJuntoComOPedido() {
-        NovoPedidoForm form = pedido(1, "999.999.999-99", 1L, 1);
-        form.setClienteNome("Giulia Rossi");
-        Pedido p = pedidoService.registrar(form, GARCOM);
-        assertThat(p.getCliente().getCpf()).isEqualTo("99999999999");
-        assertThat(p.getCliente().getNome()).isEqualTo("Giulia Rossi");
     }
 
     @Test
     void uc1MesaComPedidoAbertoFicaBloqueada() {
         // A mesa 2 já tem um pedido aguardando preparo nos dados de exemplo
-        assertThatThrownBy(() -> pedidoService.registrar(pedido(2, CLIENTE, 1L, 1), GARCOM))
+        assertThatThrownBy(() -> pedidoService.registrar(pedido(2, 1L, 1), GARCOM))
                 .isInstanceOf(RegraNegocioException.class)
                 .hasMessageContaining("já possui um pedido");
     }
 
     @Test
     void pedidoSemPratosNaoEhAceito() {
-        assertThatThrownBy(() -> pedidoService.registrar(pedido(1, CLIENTE, 1L, 0), GARCOM))
+        assertThatThrownBy(() -> pedidoService.registrar(pedido(1, 1L, 0), GARCOM))
                 .isInstanceOf(RegraNegocioException.class);
     }
 
     @Test
     void statusSegueOFluxoAteFinalizado() {
-        Pedido p = pedidoService.registrar(pedido(1, CLIENTE, 1L, 1), GARCOM);
+        Pedido p = pedidoService.registrar(pedido(1, 1L, 1), GARCOM);
         for (int i = 0; i < 4; i++) {
             pedidoService.avancarStatus(p.getId());
         }
@@ -82,22 +71,22 @@ class RegrasDeNegocioTest {
 
     @Test
     void uc3SoAvaliaPedidoFinalizado() {
-        Pedido p = pedidoService.registrar(pedido(1, CLIENTE, 1L, 1), GARCOM);
-        assertThatThrownBy(() -> avaliacaoService.avaliar(p.getId(), CLIENTE, 9, null))
+        Pedido p = pedidoService.registrar(pedido(1, 1L, 1), GARCOM);
+        assertThatThrownBy(() -> avaliacaoService.avaliar(p.getId(), 9, null))
                 .isInstanceOf(RegraNegocioException.class)
                 .hasMessageContaining("finalizados");
     }
 
     @Test
     void rn004NotaForaDe1a10EhRecusada() {
-        Pedido p = pedidoService.registrar(pedido(1, CLIENTE, 1L, 1), GARCOM);
+        Pedido p = pedidoService.registrar(pedido(1, 1L, 1), GARCOM);
         for (int i = 0; i < 4; i++) {
             pedidoService.avancarStatus(p.getId());
         }
-        assertThatThrownBy(() -> avaliacaoService.avaliar(p.getId(), CLIENTE, 11, null))
+        assertThatThrownBy(() -> avaliacaoService.avaliar(p.getId(), 11, null))
                 .hasMessageContaining("entre 1 e 10");
-        assertThatThrownBy(() -> avaliacaoService.avaliar(p.getId(), CLIENTE, 0, null))
+        assertThatThrownBy(() -> avaliacaoService.avaliar(p.getId(), 0, null))
                 .hasMessageContaining("entre 1 e 10");
-        assertThat(avaliacaoService.avaliar(p.getId(), CLIENTE, 10, "Ótimo").getNota()).isEqualTo(10);
+        assertThat(avaliacaoService.avaliar(p.getId(), 10, "Ótimo").getNota()).isEqualTo(10);
     }
 }

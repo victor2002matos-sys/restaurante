@@ -3,7 +3,6 @@ package br.com.restaurante.controller;
 import br.com.restaurante.domain.Mesa;
 import br.com.restaurante.domain.Pedido;
 import br.com.restaurante.domain.Prato;
-import br.com.restaurante.repository.ClienteRepository;
 import br.com.restaurante.repository.MesaRepository;
 import br.com.restaurante.repository.PedidoRepository;
 import br.com.restaurante.repository.PratoRepository;
@@ -30,17 +29,15 @@ public class PedidoController {
     private final PedidoRepository pedidoRepository;
     private final MesaRepository mesaRepository;
     private final PratoRepository pratoRepository;
-    private final ClienteRepository clienteRepository;
     private final PrecoService precoService;
 
     public PedidoController(PedidoService pedidoService, PedidoRepository pedidoRepository,
                             MesaRepository mesaRepository, PratoRepository pratoRepository,
-                            ClienteRepository clienteRepository, PrecoService precoService) {
+                            PrecoService precoService) {
         this.pedidoService = pedidoService;
         this.pedidoRepository = pedidoRepository;
         this.mesaRepository = mesaRepository;
         this.pratoRepository = pratoRepository;
-        this.clienteRepository = clienteRepository;
         this.precoService = precoService;
     }
 
@@ -109,7 +106,6 @@ public class PedidoController {
         model.addAttribute("form", form);
         model.addAttribute("mesas", mesas);
         model.addAttribute("ocupadas", ocupadas);
-        model.addAttribute("clientes", clienteRepository.findAllByOrderByNomeAsc());
         model.addAttribute("pratos", pratos);
         model.addAttribute("precos", precoService.precosAtuais(pratos));
     }

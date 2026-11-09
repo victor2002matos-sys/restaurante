@@ -7,7 +7,7 @@
     <div class="card"><div class="card-body p-4">
         <h1 class="h4">Pedido #<span th:text="${pedido.id}"></span></h1>
         <p class="text-muted mb-2">
-            Olá, <strong th:text="${pedido.cliente?.nome ?: 'cliente'}"></strong>! Mesa <span th:text="${pedido.mesa.numero}"></span>,
+            Mesa <span th:text="${pedido.mesa.numero}"></span>,
             <span th:text="${#temporals.format(pedido.dataHora, 'dd/MM/yyyy HH:mm')}"></span>.
         </p>
         <ul class="small text-muted">
@@ -16,7 +16,6 @@
         <div th:replace="~{fragments/layout :: alertas}"></div>
         <form th:action="@{/avaliacao}" method="post">
             <input type="hidden" name="pedidoId" th:value="${pedido.id}">
-            <input type="hidden" name="cpf" th:value="${cpf}">
             <label class="form-label">Sua nota (1 a 10)</label>
             <div class="nota-escolha d-flex flex-wrap gap-1 mb-3">
                 <th:block th:each="n : ${#numbers.sequence(1, 10)}">

@@ -20,17 +20,15 @@ public class PedidoService {
 
     private final PedidoRepository pedidoRepository;
     private final MesaRepository mesaRepository;
-    private final ClienteRepository clienteRepository;
     private final FuncionarioRepository funcionarioRepository;
     private final PratoRepository pratoRepository;
     private final PrecoService precoService;
 
     public PedidoService(PedidoRepository pedidoRepository, MesaRepository mesaRepository,
-                         ClienteRepository clienteRepository, FuncionarioRepository funcionarioRepository,
+                         FuncionarioRepository funcionarioRepository,
                          PratoRepository pratoRepository, PrecoService precoService) {
         this.pedidoRepository = pedidoRepository;
         this.mesaRepository = mesaRepository;
-        this.clienteRepository = clienteRepository;
         this.funcionarioRepository = funcionarioRepository;
         this.pratoRepository = pratoRepository;
         this.precoService = precoService;
@@ -47,8 +45,6 @@ public class PedidoService {
         Mesa mesa = mesaRepository.findById(form.getMesaNumero())
                 .orElseThrow(() -> new RegraNegocioException("Mesa " + form.getMesaNumero() + " não existe."));
 
-        Cliente cliente = identificarCliente(form);
-
         // UC-1, fluxo alternativo do passo 4
         if (mesaOcupada(mesa)) {
             throw new RegraNegocioException("A mesa " + mesa.getNumero() + " já possui um pedido não finalizado.");
@@ -59,7 +55,6 @@ public class PedidoService {
 
         Pedido pedido = new Pedido();
         pedido.setMesa(mesa);
-        pedido.setCliente(cliente);
         pedido.setFuncionario(funcionario);
         pedido.setDataHora(LocalDateTime.now());
         pedido.setStatus(StatusPedido.AGUARDANDO_PREPARO);
@@ -85,27 +80,6 @@ public class PedidoService {
             throw new RegraNegocioException("Adicione pelo menos um prato ao pedido.");
         }
         return pedidoRepository.save(pedido);
-    }
-
-    /**
-     * O cliente é opcional: sem CPF o pedido fica sem cliente; com um CPF ainda não
-     * cadastrado, o cliente é cadastrado na hora com o nome informado.
-     */
-    private Cliente identificarCliente(NovoPedidoForm form) {
-        String cpf = form.getClienteCpf() == null ? "" : form.getClienteCpf().replaceAll("\\D", "");
-        if (cpf.isEmpty()) {
-            return null;
-        }
-        if (cpf.length() != 11) {
-            throw new RegraNegocioException("CPF deve ter 11 dígitos, ou deixe o campo em branco.");
-        }
-        return clienteRepository.findById(cpf).orElseGet(() -> {
-            Cliente novo = new Cliente();
-            novo.setCpf(cpf);
-            String nome = form.getClienteNome() == null ? "" : form.getClienteNome().trim();
-            novo.setNome(nome.isEmpty() ? "Cliente " + cpf : nome);
-            return clienteRepository.save(novo);
-        });
     }
 
     /** Avança para o próximo status do fluxo (RF012). */

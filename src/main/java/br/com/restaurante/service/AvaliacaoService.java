@@ -23,22 +23,14 @@ public class AvaliacaoService {
         this.pedidoRepository = pedidoRepository;
     }
 
-    /**
-     * Confere se o pedido pode ser avaliado (UC-3, passo 4). O CPF confirma que quem avalia
-     * é o cliente do pedido, já que a avaliação é feita sem login.
-     */
+    /** Confere se o pedido pode ser avaliado (UC-3, passo 4): basta o número do pedido. */
     @Transactional(readOnly = true)
-    public Pedido validarPedido(Long pedidoId, String cpf) {
+    public Pedido validarPedido(Long pedidoId) {
         if (pedidoId == null) {
             throw new RegraNegocioException("Informe o número do pedido.");
         }
         Pedido pedido = pedidoRepository.findById(pedidoId)
                 .orElseThrow(() -> new RegraNegocioException("Pedido #" + pedidoId + " não encontrado."));
-        String cpfLimpo = cpf == null ? "" : cpf.replaceAll("\\D", "");
-        // pedido sem cliente identificado: basta o número do pedido
-        if (pedido.getCliente() != null && !pedido.getCliente().getCpf().equals(cpfLimpo)) {
-            throw new RegraNegocioException("O CPF informado não corresponde ao cliente do pedido.");
-        }
         if (pedido.getStatus() != StatusPedido.FINALIZADO) {
             throw new RegraNegocioException("Só é possível avaliar pedidos finalizados. Status atual: "
                     + pedido.getStatus().getDescricao() + ".");
@@ -49,8 +41,8 @@ public class AvaliacaoService {
         return pedido;
     }
 
-    public Avaliacao avaliar(Long pedidoId, String cpf, Integer nota, String comentario) {
-        Pedido pedido = validarPedido(pedidoId, cpf);
+    public Avaliacao avaliar(Long pedidoId, Integer nota, String comentario) {
+        Pedido pedido = validarPedido(pedidoId);
         // RN004 / UC-3 fluxo alternativo do passo 6
         if (nota == null || nota < 1 || nota > 10) {
             throw new RegraNegocioException("A nota deve estar entre 1 e 10.");

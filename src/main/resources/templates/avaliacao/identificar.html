@@ -6,17 +6,12 @@
 <main class="container" style="max-width: 520px">
     <div class="card"><div class="card-body p-4">
         <h1 class="h4">Avalie seu atendimento</h1>
-        <p class="text-muted">Informe o número do pedido que aparece na sua nota e o seu CPF, se você informou um no pedido.</p>
+        <p class="text-muted">Informe o número do pedido que aparece na sua nota.</p>
         <div th:replace="~{fragments/layout :: alertas}"></div>
         <form th:action="@{/avaliacao/validar}" method="post">
             <div class="mb-3">
                 <label class="form-label" for="pedidoId">Número do pedido</label>
                 <input class="form-control" type="number" min="1" id="pedidoId" name="pedidoId" th:value="${pedidoId}" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="cpf">CPF</label>
-                <input class="form-control" id="cpf" name="cpf" th:value="${cpf}" placeholder="Somente números">
-                <div class="form-text">Deixe em branco se o pedido foi feito sem CPF.</div>
             </div>
             <button class="btn btn-dark w-100">Continuar</button>
         </form>

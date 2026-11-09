@@ -21,7 +21,7 @@ public class AvaliacaoController {
         this.avaliacaoService = avaliacaoService;
     }
 
-    /** Passo 2: pede o número do pedido e o CPF. */
+    /** Passo 2: pede o número do pedido. */
     @GetMapping
     public String identificar(@RequestParam(required = false) Long pedido, Model model) {
         model.addAttribute("pedidoId", pedido);
@@ -30,35 +30,32 @@ public class AvaliacaoController {
 
     /** Passo 4: valida o pedido e libera nota e comentário. */
     @PostMapping("/validar")
-    public String validar(@RequestParam(required = false) Long pedidoId, @RequestParam(required = false) String cpf, Model model) {
+    public String validar(@RequestParam(required = false) Long pedidoId, Model model) {
         try {
-            Pedido pedido = avaliacaoService.validarPedido(pedidoId, cpf);
+            Pedido pedido = avaliacaoService.validarPedido(pedidoId);
             model.addAttribute("pedido", pedido);
-            model.addAttribute("cpf", cpf);
             return "avaliacao/formulario";
         } catch (RegraNegocioException e) {
             model.addAttribute("erro", e.getMessage());
             model.addAttribute("pedidoId", pedidoId);
-            model.addAttribute("cpf", cpf);
             return "avaliacao/identificar";
         }
     }
 
     /** Passos 6 a 8: confere a nota, salva e agradece. */
     @PostMapping
-    public String enviar(@RequestParam Long pedidoId, @RequestParam(required = false) String cpf,
+    public String enviar(@RequestParam Long pedidoId,
                          @RequestParam(required = false) Integer nota,
                          @RequestParam(required = false) String comentario, Model model) {
         try {
-            avaliacaoService.avaliar(pedidoId, cpf, nota, comentario);
+            avaliacaoService.avaliar(pedidoId, nota, comentario);
             return "avaliacao/obrigado";
         } catch (RegraNegocioException e) {
             model.addAttribute("erro", e.getMessage());
-            model.addAttribute("cpf", cpf);
             model.addAttribute("nota", nota);
             model.addAttribute("comentario", comentario);
             try {
-                model.addAttribute("pedido", avaliacaoService.validarPedido(pedidoId, cpf));
+                model.addAttribute("pedido", avaliacaoService.validarPedido(pedidoId));
                 return "avaliacao/formulario";
             } catch (RegraNegocioException outro) {
                 model.addAttribute("erro", outro.getMessage());

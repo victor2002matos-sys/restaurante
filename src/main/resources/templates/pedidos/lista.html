@@ -16,7 +16,7 @@
             <td><a th:href="@{/pedidos/{id}(id=${p.id})}" th:text="${p.id}"></a></td>
             <td th:text="${#temporals.format(p.dataHora, 'dd/MM HH:mm')}"></td>
             <td th:text="${p.mesa.numero}"></td>
-            <td th:text="${p.cliente?.nome ?: 'Não identificado'}"></td>
+            <td th:text="${p.cliente?.nome ?: '—'}"></td>
             <td th:text="${p.funcionario.nome}"></td>
             <td><span th:replace="~{fragments/layout :: status(${p.status})}"></span></td>
             <td class="text-end" th:text="${'R$ ' + #numbers.formatDecimal(p.total, 1, 'POINT', 2, 'COMMA')}"></td>
