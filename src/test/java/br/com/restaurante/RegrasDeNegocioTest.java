@@ -33,10 +33,11 @@ class RegrasDeNegocioTest {
 
     @Test
     void registraPedidoComStatusAguardandoPreparoECalculaTotal() {
+        // Prato 1 = Bruschetta al pomodoro (R$ 28,00, sem promoção)
         Pedido p = pedidoService.registrar(pedido(1, 1L, 2), GARCOM);
         assertThat(p.getStatus()).isEqualTo(StatusPedido.AGUARDANDO_PREPARO);
         assertThat(p.getFuncionario().getCpf()).isEqualTo(GARCOM);
-        assertThat(p.getTotal()).isEqualByComparingTo(new BigDecimal("116.00"));
+        assertThat(p.getTotal()).isEqualByComparingTo(new BigDecimal("56.00"));
     }
 
     @Test

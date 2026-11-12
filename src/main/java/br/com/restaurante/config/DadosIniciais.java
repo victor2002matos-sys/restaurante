@@ -61,77 +61,44 @@ public class DadosIniciais implements CommandLineRunner {
         cliente("66666666666", "Pedro Lima", "16988880003", "Prefere massa al dente", "Lactose", 5);
 
         Map<String, Ingrediente> ing = new HashMap<>();
-        for (String nome : Arrays.asList("Spaghetti", "Fettuccine", "Penne", "Rigatoni", "Linguine", "Tagliatelle",
-                "Massa de lasanha", "Ravioli", "Nhoque de batata", "Fusilli", "Molho de tomate", "Molho branco",
-                "Ragù de carne", "Bacon", "Guanciale", "Ovo", "Parmesão", "Pecorino", "Muçarela", "Ricota",
-                "Burrata", "Manjericão", "Alho", "Azeite", "Pimenta calabresa", "Espinafre", "Cogumelos",
-                "Camarão", "Vôngole", "Frango", "Abobrinha", "Tomate cereja", "Pão italiano", "Carne bovina",
-                "Rúcula", "Arroz arbóreo", "Mascarpone", "Café", "Cacau", "Creme de leite", "Frutas vermelhas",
-                "Limão siciliano", "Açúcar")) {
+        for (String nome : Arrays.asList("Spaghetti", "Fettuccine", "Massa de lasanha", "Molho branco",
+                "Ragù de carne", "Guanciale", "Ovo", "Parmesão", "Pecorino", "Muçarela", "Ricota", "Burrata",
+                "Manjericão", "Alho", "Azeite", "Tomate cereja", "Pão italiano", "Carne bovina", "Rúcula",
+                "Mascarpone", "Café", "Cacau", "Creme de leite", "Frutas vermelhas", "Limão siciliano", "Açúcar")) {
             ing.put(nome, ingredienteRepository.save(new Ingrediente(nome)));
         }
 
-        // Massas
-        Prato carbonara = prato("Spaghetti alla carbonara", "Spaghetti com guanciale, ovo, pecorino e pimenta-do-reino", "Massas", "58.00",
-                ing.get("Spaghetti"), ing.get("Guanciale"), ing.get("Ovo"), ing.get("Pecorino"));
-        Prato bolonhesa = prato("Spaghetti à bolonhesa", "Spaghetti com ragù de carne cozido lentamente", "Massas", "52.00",
-                ing.get("Spaghetti"), ing.get("Ragù de carne"), ing.get("Parmesão"));
-        Prato alfredo = prato("Fettuccine Alfredo", "Fettuccine na manteiga com parmesão e creme", "Massas", "54.00",
-                ing.get("Fettuccine"), ing.get("Molho branco"), ing.get("Parmesão"));
-        Prato arrabbiata = prato("Penne all'arrabbiata", "Penne com molho de tomate, alho e pimenta calabresa", "Massas", "46.00",
-                ing.get("Penne"), ing.get("Molho de tomate"), ing.get("Alho"), ing.get("Pimenta calabresa"));
-        Prato lasanha = prato("Lasanha à bolonhesa", "Camadas de massa, ragù, molho branco e muçarela gratinada", "Massas", "62.00",
-                ing.get("Massa de lasanha"), ing.get("Ragù de carne"), ing.get("Molho branco"), ing.get("Muçarela"));
-        prato("Ravioli de ricota e espinafre", "Ravioli recheado na manteiga de sálvia", "Massas", "59.00",
-                ing.get("Ravioli"), ing.get("Ricota"), ing.get("Espinafre"));
-        Prato nhoque = prato("Nhoque ao sugo", "Nhoque de batata com molho de tomate e manjericão", "Massas", "48.00",
-                ing.get("Nhoque de batata"), ing.get("Molho de tomate"), ing.get("Manjericão"));
-        prato("Tagliatelle ai funghi", "Tagliatelle com mix de cogumelos e creme", "Massas", "64.00",
-                ing.get("Tagliatelle"), ing.get("Cogumelos"), ing.get("Creme de leite"), ing.get("Parmesão"));
-        Prato pesto = prato("Linguine al pesto", "Linguine com pesto de manjericão, alho e parmesão", "Massas", "52.00",
-                ing.get("Linguine"), ing.get("Manjericão"), ing.get("Alho"), ing.get("Parmesão"), ing.get("Azeite"));
-        prato("Spaghetti alle vongole", "Spaghetti com vôngole, alho, azeite e vinho branco", "Massas", "72.00",
-                ing.get("Spaghetti"), ing.get("Vôngole"), ing.get("Alho"), ing.get("Azeite"));
-        prato("Rigatoni all'amatriciana", "Rigatoni com guanciale, tomate e pecorino", "Massas", "56.00",
-                ing.get("Rigatoni"), ing.get("Guanciale"), ing.get("Molho de tomate"), ing.get("Pecorino"));
-        prato("Spaghetti aglio, olio e peperoncino", "Spaghetti com alho, azeite e pimenta", "Massas", "42.00",
-                ing.get("Spaghetti"), ing.get("Alho"), ing.get("Azeite"), ing.get("Pimenta calabresa"));
-        prato("Linguine ao camarão", "Linguine com camarão, tomate cereja e manjericão", "Massas", "78.00",
-                ing.get("Linguine"), ing.get("Camarão"), ing.get("Tomate cereja"), ing.get("Manjericão"));
-        prato("Fusilli primavera", "Fusilli com abobrinha, tomate cereja e azeite", "Massas", "47.00",
-                ing.get("Fusilli"), ing.get("Abobrinha"), ing.get("Tomate cereja"), ing.get("Azeite"));
-        prato("Penne ao frango e molho branco", "Penne com frango desfiado e molho branco", "Massas", "53.00",
-                ing.get("Penne"), ing.get("Frango"), ing.get("Molho branco"));
+        // Entrega parcial: 3 exemplos por categoria (Entradas, Pratos principais, Sobremesas e Bebidas)
 
-        // Antipasti
-        prato("Bruschetta al pomodoro", "Pão italiano tostado com tomate, alho e manjericão", "Antipasti", "28.00",
+        // Entradas
+        prato("Bruschetta al pomodoro", "Pão italiano tostado com tomate, alho e manjericão", Categorias.ENTRADAS, "28.00",
                 ing.get("Pão italiano"), ing.get("Tomate cereja"), ing.get("Alho"), ing.get("Manjericão"));
-        prato("Burrata", "Burrata com tomate cereja, rúcula e azeite", "Antipasti", "48.00",
+        prato("Burrata", "Burrata com tomate cereja, rúcula e azeite", Categorias.ENTRADAS, "48.00",
                 ing.get("Burrata"), ing.get("Tomate cereja"), ing.get("Rúcula"), ing.get("Azeite"));
-        prato("Carpaccio", "Lâminas de carne crua com rúcula e parmesão", "Antipasti", "44.00",
+        prato("Carpaccio", "Lâminas de carne crua com rúcula e parmesão", Categorias.ENTRADAS, "44.00",
                 ing.get("Carne bovina"), ing.get("Rúcula"), ing.get("Parmesão"));
 
-        // Risotti
-        prato("Risotto ai funghi", "Arroz arbóreo com cogumelos e parmesão", "Risotti", "66.00",
-                ing.get("Arroz arbóreo"), ing.get("Cogumelos"), ing.get("Parmesão"));
-        prato("Risotto al limone", "Arroz arbóreo com limão siciliano e parmesão", "Risotti", "58.00",
-                ing.get("Arroz arbóreo"), ing.get("Limão siciliano"), ing.get("Parmesão"));
+        // Pratos principais
+        Prato carbonara = prato("Spaghetti alla carbonara", "Spaghetti com guanciale, ovo, pecorino e pimenta-do-reino", Categorias.PRATOS_PRINCIPAIS, "58.00",
+                ing.get("Spaghetti"), ing.get("Guanciale"), ing.get("Ovo"), ing.get("Pecorino"));
+        Prato alfredo = prato("Fettuccine Alfredo", "Fettuccine na manteiga com parmesão e creme", Categorias.PRATOS_PRINCIPAIS, "54.00",
+                ing.get("Fettuccine"), ing.get("Molho branco"), ing.get("Parmesão"));
+        Prato lasanha = prato("Lasanha à bolonhesa", "Camadas de massa, ragù, molho branco e muçarela gratinada", Categorias.PRATOS_PRINCIPAIS, "62.00",
+                ing.get("Massa de lasanha"), ing.get("Ragù de carne"), ing.get("Molho branco"), ing.get("Muçarela"));
 
-        // Dolci
-        Prato tiramisu = prato("Tiramisù", "Biscoito embebido em café com creme de mascarpone e cacau", "Dolci", "26.00",
+        // Sobremesas
+        Prato tiramisu = prato("Tiramisù", "Biscoito embebido em café com creme de mascarpone e cacau", Categorias.SOBREMESAS, "26.00",
                 ing.get("Mascarpone"), ing.get("Café"), ing.get("Cacau"), ing.get("Ovo"), ing.get("Açúcar"));
-        prato("Panna cotta", "Creme cozido com calda de frutas vermelhas", "Dolci", "22.00",
+        Prato pannaCotta = prato("Panna cotta", "Creme cozido com calda de frutas vermelhas", Categorias.SOBREMESAS, "22.00",
                 ing.get("Creme de leite"), ing.get("Frutas vermelhas"), ing.get("Açúcar"));
-        prato("Cannoli siciliano", "Massa crocante recheada com ricota doce", "Dolci", "24.00",
+        prato("Cannoli siciliano", "Massa crocante recheada com ricota doce", Categorias.SOBREMESAS, "24.00",
                 ing.get("Ricota"), ing.get("Açúcar"));
 
-        // Bevande
-        Prato limonada = prato("Limonada siciliana", "Limonada de limão siciliano, 400 ml", "Bevande", "14.00",
+        // Bebidas
+        Prato limonada = prato("Limonada siciliana", "Limonada de limão siciliano, 400 ml", Categorias.BEBIDAS, "14.00",
                 ing.get("Limão siciliano"), ing.get("Açúcar"));
-        prato("Água mineral", "Com ou sem gás, 500 ml", "Bevande", "7.00");
-        prato("Refrigerante", "Lata 350 ml", "Bevande", "8.00");
-        Prato vinho = prato("Vinho tinto (taça)", "Chianti, taça de 150 ml", "Bevande", "32.00");
-        prato("Espresso", "Café espresso italiano", "Bevande", "8.00", ing.get("Café"));
+        prato("Água mineral", "Com ou sem gás, 500 ml", Categorias.BEBIDAS, "7.00");
+        Prato vinho = prato("Vinho tinto (taça)", "Chianti, taça de 150 ml", Categorias.BEBIDAS, "32.00");
 
         Promocao semana = new Promocao();
         semana.setNome("Semana da massa fresca");
@@ -139,7 +106,7 @@ public class DadosIniciais implements CommandLineRunner {
         semana.setDataFim(LocalDate.now().plusDays(5));
         semana.setTipoDesconto(TipoDesconto.PERCENTUAL);
         semana.setDesconto(new BigDecimal("15"));
-        semana.getPratos().addAll(List.of(lasanha, alfredo, nhoque));
+        semana.getPratos().addAll(List.of(lasanha, alfredo));
         promocaoRepository.save(semana);
 
         Promocao bebida = new Promocao();
@@ -181,8 +148,8 @@ public class DadosIniciais implements CommandLineRunner {
         paraAvaliar.setFuncionario(garcom);
         paraAvaliar.setDataHora(LocalDateTime.now().minusHours(1));
         paraAvaliar.setStatus(StatusPedido.FINALIZADO);
-        paraAvaliar.adicionarItem(new ItemPedido(pesto, 1, pesto.getPreco()));
-        paraAvaliar.adicionarItem(new ItemPedido(arrabbiata, 1, arrabbiata.getPreco()));
+        paraAvaliar.adicionarItem(new ItemPedido(carbonara, 2, carbonara.getPreco()));
+        paraAvaliar.adicionarItem(new ItemPedido(pannaCotta, 1, pannaCotta.getPreco()));
         paraAvaliar.adicionarItem(new ItemPedido(limonada, 2, limonada.getPreco()));
         pedidoRepository.save(paraAvaliar);
 
@@ -194,7 +161,7 @@ public class DadosIniciais implements CommandLineRunner {
         emAndamento.setDataHora(LocalDateTime.now().minusMinutes(10));
         emAndamento.setStatus(StatusPedido.AGUARDANDO_PREPARO);
         emAndamento.adicionarItem(new ItemPedido(lasanha, 1, semana.aplicar(lasanha.getPreco())));
-        emAndamento.adicionarItem(new ItemPedido(bolonhesa, 1, bolonhesa.getPreco()));
+        emAndamento.adicionarItem(new ItemPedido(alfredo, 1, semana.aplicar(alfredo.getPreco())));
         emAndamento.adicionarItem(new ItemPedido(limonada, 2, bebida.aplicar(limonada.getPreco())));
         pedidoRepository.save(emAndamento);
     }

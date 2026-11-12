@@ -1,5 +1,6 @@
 package br.com.restaurante.controller.admin;
 
+import br.com.restaurante.domain.Categorias;
 import br.com.restaurante.domain.Prato;
 import br.com.restaurante.repository.IngredienteRepository;
 import br.com.restaurante.repository.PratoRepository;
@@ -13,7 +14,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /** Gerenciamento do cardápio pelo gerente (UC-2, RF004, RF006). */
 @Controller
@@ -90,7 +93,10 @@ public class PratoAdminController {
     private String formulario(Prato prato, Model model) {
         model.addAttribute("prato", prato);
         model.addAttribute("ingredientes", ingredienteRepository.findAllByOrderByNomeAsc());
-        model.addAttribute("categorias", pratoRepository.findCategorias());
+        // As quatro categorias padrão primeiro, depois outras que o gerente já tenha criado
+        Set<String> categorias = new LinkedHashSet<>(Categorias.ORDEM);
+        categorias.addAll(pratoRepository.findCategorias());
+        model.addAttribute("categorias", categorias);
         return "admin/pratos/form";
     }
 }
