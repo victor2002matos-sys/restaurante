@@ -1,4 +1,4 @@
-# Banco PostgreSQL para rodar com o perfil "postgres" (opcional)
+# Alternativa ao PostgreSQL instalado: sobe o banco já com usuário, senha e banco "restaurante"
 services:
   postgres:
     image: postgres:16

@@ -13,6 +13,17 @@ if %errorlevel%==0 (
     exit /b
 )
 
+REM O sistema guarda os dados no PostgreSQL: confere se ele esta ligado
+powershell -NoProfile -Command "try { $c = New-Object Net.Sockets.TcpClient; $c.Connect('localhost', 5432); $c.Close(); exit 0 } catch { exit 1 }"
+if not %errorlevel%==0 (
+    echo O PostgreSQL nao esta respondendo em localhost:5432.
+    echo - Se ainda nao instalou, siga o README: instale o PostgreSQL e rode o criar-banco.bat.
+    echo - Se ja instalou, ligue o servico: Win+R, digite services.msc e inicie "postgresql-x64-...".
+    echo.
+    pause
+    exit /b 1
+)
+
 if not exist target\uds mkdir target\uds
 
 REM Usa os certificados do Windows (necessario quando antivirus como o Avast inspeciona HTTPS)
