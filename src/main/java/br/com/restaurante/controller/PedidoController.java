@@ -1,5 +1,6 @@
 package br.com.restaurante.controller;
 
+import br.com.restaurante.domain.Categorias;
 import br.com.restaurante.domain.Mesa;
 import br.com.restaurante.domain.Pedido;
 import br.com.restaurante.domain.Prato;
@@ -106,7 +107,7 @@ public class PedidoController {
         model.addAttribute("form", form);
         model.addAttribute("mesas", mesas);
         model.addAttribute("ocupadas", ocupadas);
-        model.addAttribute("pratos", pratos);
+        model.addAttribute("pratosPorCategoria", Categorias.agrupar(pratos));
         model.addAttribute("precos", precoService.precosAtuais(pratos));
     }
 }

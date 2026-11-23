@@ -22,18 +22,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header fw-semibold">Pratos</div>
+                <div th:if="${#maps.isEmpty(pratosPorCategoria)}" class="text-muted">Nenhum prato disponível no momento.</div>
+                <div class="card mb-3" th:each="cat : ${pratosPorCategoria}">
+                    <div class="card-header fw-semibold" th:text="${cat.key}">Categoria</div>
                     <table class="table mb-0 align-middle">
-                        <thead><tr><th>Prato</th><th>Categoria</th><th class="text-end">Preço</th><th style="width: 110px">Qtd.</th></tr></thead>
+                        <thead><tr><th>Item</th><th class="text-end">Preço</th><th style="width: 110px">Qtd.</th></tr></thead>
                         <tbody>
-                        <tr th:each="prato : ${pratos}">
+                        <tr th:each="prato : ${cat.value}">
                             <td>
                                 <span th:text="${prato.nome}"></span>
                                 <span th:if="${precos[prato.id].compareTo(prato.preco) < 0}" class="badge border text-dark ms-1">Promoção</span>
+                                <div class="small text-muted" th:text="${prato.descricao}"></div>
                             </td>
-                            <td class="small text-muted" th:text="${prato.categoria}"></td>
-                            <td class="text-end" th:text="${'R$ ' + #numbers.formatDecimal(precos[prato.id], 1, 'POINT', 2, 'COMMA')}"></td>
+                            <td class="text-end text-nowrap" th:text="${'R$ ' + #numbers.formatDecimal(precos[prato.id], 1, 'POINT', 2, 'COMMA')}"></td>
                             <td>
                                 <input type="number" min="0" max="99" class="form-control form-control-sm qtd"
                                        th:name="'quantidades[' + ${prato.id} + ']'"
