@@ -4,7 +4,7 @@ Protótipo funcional (entrega parcial) do sistema descrito no documento de requi
 Aplicação web em **Java 21 + Spring Boot 4.1**, gerada pelo [Spring Initializr](https://start.spring.io), no padrão **MVC**:
 
 | Camada MVC | Onde está | Tecnologia |
-| --- | --- | --- |
+
 | Model (domínio) | `src/main/java/br/com/restaurante/domain` | Entidades JPA |
 | Persistência | `src/main/java/br/com/restaurante/repository` | Spring Data JPA + **PostgreSQL** |
 | Regras de negócio | `src/main/java/br/com/restaurante/service` | Spring `@Service` |
